@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
  * author  jas0n
  * date    2023/2/22
  */
-@Repository
+@Repository//此注解为了MpDemoApplicationTests而加
 public interface UserMapper extends BaseMapper<User> {
 }
