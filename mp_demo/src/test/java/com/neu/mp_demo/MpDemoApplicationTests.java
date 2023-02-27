@@ -1,5 +1,6 @@
 package com.neu.mp_demo;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.neu.mp_demo.entity.User;
 import com.neu.mp_demo.mapper.UserMapper;
@@ -27,7 +28,7 @@ public class MpDemoApplicationTests {
     @Test
     public void addUser(){
         User user = new User();
-        user.setName("test_opt_locker");
+        user.setName("Jason_sb");
         user.setAge(23);
         user.setEmail("@126.com");
         int result = usermapper.insert(user);
@@ -95,9 +96,23 @@ public class MpDemoApplicationTests {
         System.out.println(page.getTotal());//总记录数
         System.out.println(page.getPages());//总页数
     }
+    //测试逻辑删除
     @Test
     public void test_logic_delete(){
         int result = usermapper.deleteById(1629024436759855106L);
         System.out.println("result = "+result);
+    }
+
+    //复杂条件查询
+    @Test
+    public void testSelectQuery(){
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+//        wrapper.ge("age",18);
+//        wrapper.eq("name","jack");
+////        wrapper.between("age",18,20);
+        wrapper.like("name","J").orderByDesc("id").select("id","name");
+        List<User> users = usermapper.selectList(wrapper);
+        System.out.println(getFormatLogString(users.toString(),31,0));
+
     }
 }
