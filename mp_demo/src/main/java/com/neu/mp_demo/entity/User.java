@@ -2,6 +2,7 @@ package com.neu.mp_demo.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.Version;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,5 +33,8 @@ public class User {
     @TableField(fill = FieldFill.INSERT)
     private Integer version;//版本号
 
+    @TableLogic
+//    @TableField(fill = FieldFill.INSERT) 与数据库数据default有一个即可
+    private Integer deleted;
 
 }

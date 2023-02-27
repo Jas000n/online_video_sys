@@ -18,6 +18,7 @@ public class MpDemoApplicationTests {
 
 
 
+    //逻辑删除的检测被自动封装了
     @Test
     public void findAll() {
         List<User> AllUsers = usermapper.selectList(null);
@@ -49,6 +50,7 @@ public class MpDemoApplicationTests {
         //根据id查询数据
         User test_user = usermapper.selectById(1629024436759855106L);
         test_user.setName("Jason_test");
+        //修改
         int result = usermapper.updateById(test_user);
         System.out.println("result is : "+result);
 
@@ -93,6 +95,9 @@ public class MpDemoApplicationTests {
         System.out.println(page.getTotal());//总记录数
         System.out.println(page.getPages());//总页数
     }
-
-
+    @Test
+    public void test_logic_delete(){
+        int result = usermapper.deleteById(1629024436759855106L);
+        System.out.println("result = "+result);
+    }
 }
