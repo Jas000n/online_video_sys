@@ -1,6 +1,7 @@
 package com.Jason.proservice.controller;
 
 
+import com.Jason.common.utils.R;
 import com.Jason.proservice.entity.Producer;
 import com.Jason.proservice.service.ProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,16 +28,20 @@ public class ProducerController {
 
     //查询所有创作者数据
     @GetMapping("findAll")
-    public List<Producer> findAllProducer(){
+    public R findAllProducer(){
         List<Producer> AllProducerlist = producerService.list(null);
-        return AllProducerlist;
+        return R.ok().data("items",AllProducerlist);
     }
     //根据id，逻辑删除讲师
     @DeleteMapping("{id}")
-    public boolean deleteByID(@PathVariable String id){
+    public R deleteByID(@PathVariable String id){
         System.out.println(id);
         boolean b = producerService.removeById(id);
-        return b;
+        if(b){
+            return R.ok();
+        }else {
+            return R.error();
+        }
     }
 
 }
