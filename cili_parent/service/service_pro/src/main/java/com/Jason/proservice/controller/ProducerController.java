@@ -11,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
-import java.util.PrimitiveIterator;
 
 /**
  * <p>
@@ -109,5 +107,25 @@ public class ProducerController {
 
 
     }
+    //根据创作者id进行查询
+    @GetMapping("getProducer/{id}")
+    public R getProducer(@PathVariable String id){
+        Producer producer = producerService.getById(id);
+        return R.ok().data("Producer",producer);
+
+    }
+
+    //创作者修改功能
+    @PostMapping("updateProducer")
+    public R updateProducer(@RequestBody Producer producer){
+        boolean b = producerService.updateById(producer);
+        if(b){
+            return R.ok();
+        }else{
+            return R.error();
+        }
+
+    }
+
 }
 
