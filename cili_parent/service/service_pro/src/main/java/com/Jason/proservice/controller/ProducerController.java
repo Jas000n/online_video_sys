@@ -96,5 +96,18 @@ public class ProducerController {
         return R.ok().data("total",total).data("rows",records);
     }
 
+
+    //添加创作者的方法
+    @PostMapping("addProducer")
+    public R addProducer(@RequestBody Producer producer){
+        boolean save = producerService.save(producer);
+        if(save){
+            return R.ok();
+        }else{
+            return R.error();
+        }
+
+
+    }
 }
 
