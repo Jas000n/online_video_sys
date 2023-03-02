@@ -40,6 +40,7 @@ public class R {
         r.setMessage("失败");
         return r;
     }
+    //下面这些不同于setSuccess，setMessage等，返回的参数还是R本身
     public R success(Boolean success){
         this.setSuccess(success);
         return this;
@@ -54,6 +55,11 @@ public class R {
     }
     public R data(Map<String,Object> map){
         this.setData(map);
+        return this;
+    }
+
+    public R code(Integer code){
+        this.setCode(code);
         return this;
     }
 }

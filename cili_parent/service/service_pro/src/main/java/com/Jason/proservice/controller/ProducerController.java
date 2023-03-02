@@ -5,6 +5,7 @@ import com.Jason.common.utils.R;
 import com.Jason.proservice.entity.Producer;
 import com.Jason.proservice.entity.vo.ProducerQuery;
 import com.Jason.proservice.service.ProducerService;
+import com.Jason.servicebase.exceptionhandler.CiliException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,13 @@ public class ProducerController {
     @GetMapping("findAll")
     public R findAllProducer(){
         List<Producer> AllProducerlist = producerService.list(null);
+        //该段注释用于测试自定义异常处理
+//        try{
+//            int i = 1/0;
+//
+//        }catch (Exception e){
+//            throw new CiliException(20001,"遇见了该死的除0");
+//        }
         return R.ok().data("items",AllProducerlist);
     }
     //根据id，逻辑删除讲师
