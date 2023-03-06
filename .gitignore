@@ -4,3 +4,5 @@ cili_parent/service/service_pro/src/main/java/.DS_Store
 .idea/modules.xml
 
 .idea/online_video_sys.iml
+.idea
+vue-admin-template-master/node_modules
