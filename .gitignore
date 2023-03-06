@@ -1,3 +1,6 @@
 .DS_Store
 cili_parent/common/service_base/src/main/java/com/Jason/servicebase/.DS_Store
 cili_parent/service/service_pro/src/main/java/.DS_Store
+.idea/modules.xml
+
+.idea/online_video_sys.iml
