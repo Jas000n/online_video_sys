@@ -3,6 +3,38 @@
     <div class = "app-container">
       创作者列表
     </div>
+    <el-form :inline="true" :model="producerQuery" class="demo-form-inline">
+      <el-form-item label="姓名">
+        <el-input v-model="producerQuery.name" placeholder="模糊姓名查询"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-date-picker
+          v-model="producerQuery.begin"
+          type="datetime"
+          placeholder="请选择注册开始时间"
+          value-format="yyyy-MM-dd HH:mm:ss"
+          default-time="00:00:00"
+
+        />
+      </el-form-item>
+      <el-form-item>
+        <el-date-picker
+          v-model="producerQuery.end"
+          type="datetime"
+          placeholder="请选择注册结束时间"
+          value-format="yyyy-MM-dd HH:mm:ss"
+          default-time="00:00:00"
+
+        />
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="getList()">查询</el-button>
+        <el-button type="default" @click="reset()">清空</el-button>
+      </el-form-item>
+
+    </el-form>
+
+
     <el-table
       :data="list"
       :default-sort = "{prop: 'id', order: 'ascending'}"
@@ -40,7 +72,6 @@
 
     </el-table>
     <div class="block">
-      <span class="demonstration">完整功能</span>
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -96,6 +127,11 @@ export default {
       console.log(`当前页: ${val}`);
       this.page = val;
       this.getList(this.page,this.limit);
+    },
+    reset(){
+      console.log("reset!!!")
+      this.producerQuery = {}
+      this.getList()
     }
 
   }
