@@ -36,7 +36,27 @@ export const constantRouterMap = [
       component: () => import('@/views/dashboard/index')
     }]
   },
-
+  {
+    path: '/producer',
+    component: Layout,
+    redirect: '/producer/table',
+    name: '创作者管理',
+    meta: { title: '创作者管理', icon: 'example' },
+    children: [
+      {
+        path: 'table',
+        name: '创作者列表',
+        component: () => import('@/views/producer/list'),
+        meta: { title: '创作者列表', icon: 'table' }
+      },
+      {
+        path: 'tree',
+        name: '添加创作者',
+        component: () => import('@/views/producer/save'),
+        meta: { title: '添加创作者', icon: 'tree' }
+      }
+    ]
+  },
   {
     path: '/example',
     component: Layout,
