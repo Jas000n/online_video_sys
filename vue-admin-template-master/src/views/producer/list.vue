@@ -66,7 +66,8 @@
           <el-button
             size="mini"
             type="danger"
-            >删除</el-button>
+            @click="removeProducerByID(scope.row.id,scope.row.name)"
+          >删除</el-button>
         </template>
       </el-table-column>
 
@@ -128,12 +129,44 @@ export default {
       this.page = val;
       this.getList(this.page,this.limit);
     },
+    //重置数据
     reset(){
       console.log("reset!!!")
       this.producerQuery = {}
       this.getList()
-    }
+    },
+  //删除创作者
+    removeProducerByID(id,name){
+      console.log(id);
+      this.$confirm('此操作将永久删除该创作者:'+name+', 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        producer.removeProducerByID(id)
+          .then(response =>{
+            //删除成功
+            this.getList();
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+          })
+          .catch(error =>{
+            this.$message({
+              type: 'error',
+              message: '删除失败!'
+            });
+          })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
 
+
+    }
   }
 }
 </script>
