@@ -32,6 +32,23 @@ export default{
       data:producer
     })
 
+  },
+
+  //通过id获取创作者信息
+  getProducerByID(id){
+    return request({
+      url:`/proservice/producer/getProducer/${id}`,
+      method:"get",
+    })
+  },
+
+  //修改创作者
+  updateProducer(producer){
+    return request({
+      url:`/proservice/producer/updateProducer`,
+      method:"post",
+      data:producer
+    })
   }
 
 

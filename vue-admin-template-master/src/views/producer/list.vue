@@ -37,7 +37,7 @@
 
     <el-table
       :data="list"
-      :default-sort = "{prop: 'id', order: 'ascending'}"
+      :default-sort = "{prop: 'gmtCreate', order: 'descending'}"
       style="width: 100%">
       <el-table-column
         prop="id"
@@ -60,14 +60,19 @@
         width="180"/>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            >编辑</el-button>
+          <router-link :to="'/producer/edit/' +scope.row.id">
+            <el-button
+              size="mini"
+            >编辑
+            </el-button>
+          </router-link>
+
           <el-button
             size="mini"
             type="danger"
             @click="removeProducerByID(scope.row.id,scope.row.name)"
-          >删除</el-button>
+          >删除
+          </el-button>
         </template>
       </el-table-column>
 
@@ -77,7 +82,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="page"
-        :page-sizes="[1, 2, 3, 4]"
+        :page-sizes="[5, 10, 15, 20]"
         :page-size="limit"
         layout="total, sizes, prev, pager, next, jumper"
         :total="this.total">
@@ -94,7 +99,7 @@ export default {
     return {
       list: null, // 查询之后接口返回的数据
       page: 1, // 当前页
-      limit: 3, // 每页记录数
+      limit: 10, // 每页记录数
       total: 0, // 总记录数
       producerQuery: {}
     }
@@ -105,7 +110,7 @@ export default {
   },
   methods: {
     // 获取创作者列表
-    getList(page =1,limit=3) {
+    getList(page =1,limit=10) {
       this.page = page
       this.limit = limit
       producer.getProducerListPage(this.page, this.limit, this.producerQuery)
@@ -166,7 +171,8 @@ export default {
       });
 
 
-    }
+    },
+
   }
 }
 </script>

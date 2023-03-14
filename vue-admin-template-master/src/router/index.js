@@ -54,6 +54,14 @@ export const constantRouterMap = [
         name: '添加创作者',
         component: () => import('@/views/producer/save'),
         meta: { title: '添加创作者', icon: 'tree' }
+      },
+      //这个路由用于在创作者list表格里点击修改按钮后数据回显到sava页面中
+      {
+        path:'edit/:id',
+        name:"修改创作者",
+        component: () => import('@/views/producer/save'),
+        meta:{ title:'修改创作者',nocache:true},
+        hidden:true
       }
     ]
   },
