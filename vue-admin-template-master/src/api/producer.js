@@ -22,7 +22,17 @@ export default{
     }
 
   )
-}
+  },
+
+  //添加创作者
+  addProducer(producer){
+    return request({
+      url:`/proservice/producer/addProducer`,
+      method:"post",
+      data:producer
+    })
+
+  }
 
 
 }
