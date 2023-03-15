@@ -57,14 +57,38 @@ export default {
   created() {
     //判断路径是否含有id值,这里的作用是新增创作者和修改创作者用的同一个页面
     //在渲染前需要检查一下路径里时候否存在id这个参数，是否需要根据路由里的参数回显创作者用户信息
-    if(this.$route.params && this.$route.params.id){
-      //从路径处获取id值
-      const id = this.$route.params.id;
-      //调用方法，根据id找到创作者
-      this.getProducerByID(id);
+    // if(this.$route.params && this.$route.params.id) {
+    //   //从路径处获取id值
+    //   const id = this.$route.params.id;
+    //   //调用方法，根据id找到创作者
+    //   this.getProducerByID(id);
+    // }
+    // // }else{
+    // //   //请空表单，因为此时不是修改创作者，表单应该是空的，而直接把producer置空时不行的，created没有第二次执行
+    // //   this.producer = {}
+    // // }
+    this.init()
+  },
+  //路由切换问题，当两个路由渲染同一个组件，组件不会被第二次created，导致生命周期的函数不会被执行第二次
+  watch:{//监听，这里监听路由变化，每次路由发生变化就会执行
+    $route(to,from){
+        this.init()
     }
   },
   methods:{
+    init(){
+      //初始化方法，来判断是修改还是添加，决定是否将表单清空，还是根据参数id去回显信息
+      if(this.$route.params && this.$route.params.id) {
+        //从路径处获取id值
+        const id = this.$route.params.id;
+        //调用方法，根据id找到创作者
+        this.getProducerByID(id);
+
+      }else{
+        //请空表单，因为此时不是修改创作者，表单应该是空的，而直接把producer置空时不行的，created没有第二次执行
+        this.producer = {}
+      }
+    },
     //根据id获取创作者信息,赋值
     getProducerByID(id) {
       producerApi.getProducerByID(id)
