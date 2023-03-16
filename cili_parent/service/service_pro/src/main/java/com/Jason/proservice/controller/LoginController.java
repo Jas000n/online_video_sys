@@ -20,6 +20,6 @@ public class LoginController {
         System.out.println("调用info");
         return R.ok().
                 data("roles","[admin]").data("name","admin").
-                data("avatar","https://s2.best-wallpaper.net/wallpaper/1920x1200/1809/Cute-furry-kitten-basket_1920x1200.jpg");
+                data("avatar","https://jason-cili.oss-cn-beijing.aliyuncs.com/2023/03/16/c696c2920e95432f867f59bb4aead179_cat1.jpg");
     }
 }
