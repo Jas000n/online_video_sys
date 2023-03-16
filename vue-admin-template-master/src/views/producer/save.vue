@@ -130,12 +130,16 @@ export default {
     //关闭上传弹框的办法
     close(){
       this.imagecropperShow = false;
+      //上传组件初始化
+      this.imagecropperKey = this.imagecropperKey+1
     },
 
     //上传图像成功后的方法
     cropSuccess(data){
       this.producer.avatar = data.url;
       this.imagecropperShow = false;
+      //上传组件初始化
+      this.imagecropperKey = this.imagecropperKey+1
 
     },
     //根据id获取创作者信息,赋值
