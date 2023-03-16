@@ -10,6 +10,14 @@
     </parent>
 
     <artifactId>service_pro</artifactId>
+    <dependencies>
+<!--        用于读写excel-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+    </dependencies>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
