@@ -14,6 +14,21 @@ create table cilicili.producer
 )
     comment '创作者';
 
+create table cilicili.classification
+(
+    id           char(19)                 not null comment '类别ID'
+        primary key,
+    title        varchar(10)              not null comment '类别名称',
+    parent_id    char(19)     default '0' not null comment '父ID',
+    sort         int unsigned default '0' not null comment '排序字段',
+    gmt_create   datetime                 not null comment '创建时间',
+    gmt_modified datetime                 not null comment '更新时间'
+)
+    comment '影视类别';
+
+create index idx_parent_id
+    on cilicili.classification (parent_id);
+
 
 INSERT INTO cilicili.producer (id, name, intro, avatar, sort, is_deleted, gmt_create, gmt_modified) VALUES ('1', '1', '1', '1', 1, 1, '2023-02-28 18:08:39', '2023-02-28 18:08:41');
 INSERT INTO cilicili.producer (id, name, intro, avatar, sort, is_deleted, gmt_create, gmt_modified) VALUES ('2', '2', '2', '2', 2, 0, '2023-02-28 22:34:13', '2023-02-28 22:34:14');
