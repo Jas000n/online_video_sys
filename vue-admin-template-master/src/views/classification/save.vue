@@ -19,7 +19,7 @@
           :action="BASE_API+'/service/classification/addClassification'"
           name="multipartFile"
           accept="application/vnd.ms-excel">
-          <el-button slot="trigger" size="small" type="primary" >选取文件</el-button>
+          <el-button slot="trigger" size="small" type="primary" @click="permitUpload()">选取文件</el-button>
           <el-button
             :loading="loading"
             style="margin-left: 10px;"
@@ -46,18 +46,27 @@ export default {
   created() {
   },
   methods:{
+    permitUpload(){
+      this.permissionToUpload=true
+    },
     //点击按钮上传文件到接口里面
     submitUpload(){
-      this.importBtnDisabled = true;
-      this.loading = true;
-      //js:document.getElementById("upload").submit()
-      //而下面这种写法可以直接找到dom，用$去取值
-      this.$refs.upload.submit();
-      // this.permissionToUpload = true;
+      if(this.permissionToUpload){
+        this.importBtnDisabled = true;
+        this.loading = true;
+        //js:document.getElementById("upload").submit()
+        //而下面这种写法可以直接找到dom，用$去取值
+        this.$refs.upload.submit();
+      }else{
+        this.$message({
+          type:"error",
+          message:"请先选择文件"
+        })
+      }
+
     },
     //上传成功
     fileUploadSuccess(){
-      // if(this.permissionToUpload){
         this.loading = false;
         this.$message({
           type:'success',
@@ -65,13 +74,6 @@ export default {
         })
         //跳转页面
         this.$router.push({path:'/classification/list'})
-      // }else{
-      //   this.$message({
-      //     type:"error",
-      //     message:'请先选择文件！'
-      //     }
-      //   )
-      // }
 
     },
     //上传失败
