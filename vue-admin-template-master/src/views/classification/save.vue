@@ -19,7 +19,7 @@
           :action="BASE_API+'/service/classification/addClassification'"
           name="multipartFile"
           accept="application/vnd.ms-excel">
-          <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+          <el-button slot="trigger" size="small" type="primary" >选取文件</el-button>
           <el-button
             :loading="loading"
             style="margin-left: 10px;"
@@ -39,7 +39,8 @@ export default {
     return{
       BASE_API:process.env.BASE_API,
       importBtnDisabled:false,
-      loading:false
+      loading:false,
+      permissionToUpload:false
     }
   },
   created() {
@@ -52,21 +53,32 @@ export default {
       //js:document.getElementById("upload").submit()
       //而下面这种写法可以直接找到dom，用$去取值
       this.$refs.upload.submit();
+      // this.permissionToUpload = true;
     },
     //上传成功
     fileUploadSuccess(){
-      this.loading = false;
-      this.$message({
-        type:'success',
-        message:'添加影视分类成功！'
-      })
-      //跳转页面
+      // if(this.permissionToUpload){
+        this.loading = false;
+        this.$message({
+          type:'success',
+          message:'添加影视分类成功！'
+        })
+        //跳转页面
+        this.$router.push({path:'/classification/list'})
+      // }else{
+      //   this.$message({
+      //     type:"error",
+      //     message:'请先选择文件！'
+      //     }
+      //   )
+      // }
+
     },
     //上传失败
     fileUploadError(){
       this.loading = false;
       this.$message({
-        type:'success',
+        type:'error',
         message:'添加影视分类失败！'
       })
     },
