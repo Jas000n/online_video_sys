@@ -50,7 +50,7 @@ export const constantRouterMap = [
         meta: { title: '创作者列表', icon: 'table' }
       },
       {
-        path: 'tree',
+        path: 'save',
         name: '添加创作者',
         component: () => import('@/views/producer/save'),
         meta: { title: '添加创作者', icon: 'tree' }
@@ -63,6 +63,27 @@ export const constantRouterMap = [
         meta:{ title:'修改创作者',nocache:true},
         hidden:true
       }
+    ]
+  },
+  {
+    path: '/classification',
+    component: Layout,
+    redirect: '/classification/list',
+    name: '影视分类管理',
+    meta: { title: '影视分类管理', icon: 'example' },
+    children: [
+      {
+        path: 'list',
+        name: '影视分类列表',
+        component: () => import('@/views/classification/list'),
+        meta: { title: '影视分类列表', icon: 'table' }
+      },
+      {
+        path: 'save',
+        name: '添加影视分类',
+        component: () => import('@/views/classification/save'),
+        meta: { title: '添加影视分类', icon: 'tree' }
+      },
     ]
   },
   {
