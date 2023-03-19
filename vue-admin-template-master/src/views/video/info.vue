@@ -57,7 +57,22 @@
         <el-input-number :min="0" v-model="videoInfo.episodeNum" controls-position="right" placeholder="请填写影视的总集数"/>
       </el-form-item>
 <!--      影视简介-->
+
+
 <!--      影视封面-->
+      <el-form-item label="影视封面">
+        <el-upload
+          :show-file-list="false"
+          :auto-upload="true"
+          :on-success="handleCoverSuccess"
+          :before-upload="beforeCoverUpload"
+          :action="BASE_API+'/oss/fileoss'"
+          class="avatar-uploader">
+          <img :src="videoInfo.cover">
+        </el-upload>
+      </el-form-item>
+
+<!--      //价格-->
       <el-form-item label="影视价格">
         <el-input-number :min="0" v-model="videoInfo.price" controls-position="right" placeholder="免费视频请设置为0元"/> 元
       </el-form-item>
@@ -89,12 +104,13 @@ export default {
         producerId:"",
         episodeNum:0,
         description:"",
-        cover:"",
+        cover:"/static/videoCover.png",
         price:0
       },
       producerList:{},
       Lv1ClassList:{},
-      Lv2ClassList:{}
+      Lv2ClassList:{},
+      BASE_API:process.env.BASE_API,
     }
   },
   methods:{
@@ -141,7 +157,28 @@ export default {
           this.$router.push({path:'/video/season/'+response.data.videoId})
         })
 
+    },
+
+    //上传成功
+    handleCoverSuccess(res, file) {
+      console.log(res)// 上传响应
+      console.log(URL.createObjectURL(file.raw))// base64编码
+      this.videoInfo.cover = res.data.url
+    },
+
+    //上传前
+    beforeCoverUpload(file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+      if (!isJPG) {
+        this.$message.error('上传封面图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传封面图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
     }
+
   }
 }
 </script>
