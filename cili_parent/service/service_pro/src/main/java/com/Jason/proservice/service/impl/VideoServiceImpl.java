@@ -19,7 +19,7 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
     private VideoDescriptionService videoDescriptionService;
     //添加影视信息的基本方法
     @Override
-    public void saveVideoInfo(VideoInfoVO videoInfoVO) {
+    public String saveVideoInfo(VideoInfoVO videoInfoVO) {
         Video toSave = new Video();
         //直接赋值
         BeanUtils.copyProperties(videoInfoVO,toSave);
@@ -39,6 +39,8 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
         videoDescription.setDescription(videoInfoVO.getDescription());
         videoDescription.setId(VID);
         videoDescriptionService.save(videoDescription);
+
+        return VID;
 
     }
 }

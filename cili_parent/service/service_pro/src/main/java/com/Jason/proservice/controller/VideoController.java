@@ -17,7 +17,8 @@ public class VideoController {
     //添加影视基本信息的方法
     @PostMapping("/addVideoInfo")
     public R addVideoInfo(@RequestBody VideoInfoVO videoInfoVO){
-        videoService.saveVideoInfo(videoInfoVO);
-        return R.ok();
+        //返回添加之后的影视id
+        String id = videoService.saveVideoInfo(videoInfoVO);
+        return R.ok().data("videoId",id);
     }
 }
