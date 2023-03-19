@@ -87,6 +87,48 @@ export const constantRouterMap = [
     ]
   },
   {
+    path: '/video',
+    component: Layout,
+    redirect: '/video/list',
+    name: '影视管理',
+    meta: { title: '影视管理', icon: 'example' },
+    children: [
+      {
+        path: 'list',
+        name: '影视列表',
+        component: () => import('@/views/video/list'),
+        meta: { title: '影视列表', icon: 'table' }
+      },
+      {
+        path: 'info',
+        name: '添加影视',
+        component: () => import('@/views/video/info'),
+        meta: { title: '添加影视', icon: 'tree' }
+      },
+      {
+        path:'info/:id',
+        name:"VideoInfoEdit",
+        component:()=> import('@/views/video/info'),
+        meta: {title: '编辑影视基本信息',noCache:true},
+        hidden: true
+      },
+      {
+        path: 'season/:id',
+        name: 'VideoSeasonEdit',
+        component:() =>import('@/views/video/season'),
+        meta: {title:'编辑季信息',noCache: true},
+        hidden: true
+      },
+      {
+        path: 'publish/:id',
+        name: 'VideoPublishEdit',
+        component:()=>import('@/views/video/publish'),
+        meta: {title: '发布影视',noCache: true},
+        hidden: true
+      }
+    ]
+  },
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/table',

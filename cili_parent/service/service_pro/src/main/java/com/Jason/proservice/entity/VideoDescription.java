@@ -18,7 +18,8 @@ public class VideoDescription implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.ID_WORKER_STR)
+    //input表示需要手动输入而非自动生成，indie要与vide的id一一对应
+    @TableId(value = "id", type = IdType.INPUT)
     private String id;
 
 

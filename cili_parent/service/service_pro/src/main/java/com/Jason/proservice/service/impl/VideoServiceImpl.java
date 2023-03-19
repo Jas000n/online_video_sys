@@ -31,9 +31,13 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
             throw new CiliException(20001,"添加影视信息失败");
         }
 
+        //影视id和影视描述id一致，这样可以使其两两对应
+        String VID = toSave.getId();
+
         //向影视简介里添加影视简介基本信息
         VideoDescription videoDescription = new VideoDescription();
         videoDescription.setDescription(videoInfoVO.getDescription());
+        videoDescription.setId(VID);
         videoDescriptionService.save(videoDescription);
 
     }
