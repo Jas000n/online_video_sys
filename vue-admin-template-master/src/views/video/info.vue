@@ -14,15 +14,40 @@
         <el-input v-model="videoInfo.title" placeholder="实例:猫和老鼠" />
       </el-form-item>
 <!--      所属分类-->
+      <el-form-item label="视频分类">
+
+<!--        一级分类-->
+        <el-select v-model="videoInfo.classificationParentId"
+                   @change="renderLv2List"
+                   placeholder="请选择一级分类">
+          <el-option
+            v-for="Lv1Class in Lv1ClassList"
+            :key="Lv1Class.id"
+            :label="Lv1Class.title"
+            :value="Lv1Class.id"/>
+        </el-select>
+<!--      二级分类-->
+        <el-select v-model="videoInfo.classificationId"
+                   placeholder="请选择二级分类">
+          <el-option
+            v-for="Lv2Class in Lv2ClassList"
+            :key="Lv2Class.id"
+            :label="Lv2Class.title"
+            :value="Lv2Class.id"
+          />
+        </el-select>
+
+      </el-form-item>
+
 <!--      视频创作者-->
       <el-form-item label="视频创作者">
         <el-select v-model="videoInfo.producerId"
                    placeholder="请选择">
-                   <el-option
-                     v-for="producer in producerList"
-                     :key="producer.id"
-                     :label="producer.name"
-                     :value="producer.id"/>
+          <el-option
+            v-for="producer in producerList"
+            :key="producer.id"
+            :label="producer.name"
+            :value="producer.id"/>
         </el-select>
 
       </el-form-item>
@@ -46,11 +71,13 @@
 
 <script>
 import videoApi from "@/api/video"
+import classificationApi from '@/api/classification'
 export default {
   name: 'info.vue',
   created() {
     //获取数据用于下拉列表选择
     this.getListProducer();
+    this.getListClassification();
   },
   data(){
     return{
@@ -58,13 +85,16 @@ export default {
       videoInfo:{
         title:"",
         classificationId:"",
+        classificationParentId:"",
         producerId:"",
         episodeNum:0,
         description:"",
         cover:"",
         price:0
       },
-      producerList:{}
+      producerList:{},
+      Lv1ClassList:{},
+      Lv2ClassList:{}
     }
   },
   methods:{
@@ -74,6 +104,25 @@ export default {
         .then(result =>{
           this.producerList = result.data.items
         } )
+    },
+    //点击一级分类后渲填充对应的二级分类
+    renderLv2List(Lv1Id){
+      for(let i=0; i<this.Lv1ClassList.length;i++){
+        if(this.Lv1ClassList[i].id===Lv1Id){
+          this.Lv2ClassList = this.Lv1ClassList[i].children;
+          //下面这行是切换一级分类不出bug
+          this.videoInfo.classificationId=""
+        }
+      }
+
+    },
+
+    //获取所有分类
+    getListClassification(){
+      classificationApi.getClassificationList()
+        .then(response =>{
+          this.Lv1ClassList = response.data.list;
+        })
     },
 
 

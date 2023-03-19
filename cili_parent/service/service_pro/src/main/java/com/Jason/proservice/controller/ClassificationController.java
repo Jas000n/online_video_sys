@@ -31,7 +31,6 @@ public class ClassificationController {
     public R getAllClassification(){
 
         List<Lv1Classification> result = classificationService.getAllClassification();
-        System.out.println("执行了！");
         System.out.println(result);
         return R.ok().data("list",result);
     }
