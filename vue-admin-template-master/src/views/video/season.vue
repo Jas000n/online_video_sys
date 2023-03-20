@@ -9,13 +9,27 @@
 
     </el-steps>
 
+    <el-button type="text">添加季和集</el-button>
+<!--    展示季和集-->
+    <ul class="seasonList" >
+      <li v-for="season in SeasonsAndEpisodes" :key="season.id">
+        <p>
+          {{ season.title }}
 
-    <ul>
-      <li v-for="season in SeasonsAndEpisodes" :key="season.id">s
-        {{season.title}}
-        <ul>
+          <span class="acts">
+                <el-button type="text">添加影视季</el-button>
+                <el-button style="" type="text">编辑</el-button>
+                <el-button type="text">删除</el-button>
+            </span>
+        </p>
+        <ul class="seasonList episodeList">
           <li v-for="episode in season.children" :key="episode.key">
-            {{episode.title}}
+            <p>{{ episode.title }}
+              <span class="acts">
+                        <el-button type="text">编辑</el-button>
+                        <el-button type="text">删除</el-button>
+              </span>
+            </p>
           </li>
         </ul>
       </li>
@@ -75,5 +89,49 @@ export default {
 </script>
 
 <style scoped>
+.seasonList{
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.seasonList li{
+  position: relative;
+}
+.seasonList p{
+  float: left;
+  font-size: 20px;
+  margin: 10px 0;
+  padding: 10px;
+  height: 70px;
+  line-height: 50px;
+  width: 100%;
+  border: 1px solid #DDD;
+}
+
+.seasonList .acts {
+
+  float: right;
+  font-size: 14px;
+}
+
+
+.episodeList{
+
+  padding-left: 50px;
+
+}
+
+.episodeList p{
+
+  float: left;
+  font-size: 14px;
+  margin: 10px 0;
+  padding: 10px;
+  height: 50px;
+  line-height: 30px;
+  width: 100%;
+  border: 1px dotted #DDD;
+}
 
 </style>
