@@ -9,6 +9,17 @@
 
     </el-steps>
 
+
+    <ul>
+      <li v-for="season in SeasonsAndEpisodes" :key="season.id">s
+        {{season.title}}
+        <ul>
+          <li v-for="episode in season.children" :key="episode.key">
+            {{episode.title}}
+          </li>
+        </ul>
+      </li>
+    </ul>
     <el-form label-width="120px">
       <el-form-item>
         <el-button @click="previous">上一步</el-button>
@@ -21,16 +32,36 @@
 
 
 <script>
+import seasonApi from "@/api/season"
 export default {
+
   name: 'season.vue',
   created() {
+    //获取路由里的id值
+    if(this.$route.params && this.$route.params.id){
+      this.videoID = this.$route.params.id;
+    }
+    //调用方法,获得影视的所有季和集
+    this.getSeasonsAndEpisode(this.videoID)
+
   },
   data(){
     return{
       saveBthDisabled:false,
+      SeasonsAndEpisodes:{},
+      videoID:""
     }
   },
   methods:{
+    //根据影视id获得季和集
+    getSeasonsAndEpisode() {
+      seasonApi.getSeasonsAndEpisodes(this.videoID)
+        .then(result => {
+          console.log(result)
+          this.SeasonsAndEpisodes = result.data.seasons;
+        })
+    },
+    //跳到前一个页面
     previous(){
        console.log("previous")
       this.$router.push({path:"/video/info/1"})
