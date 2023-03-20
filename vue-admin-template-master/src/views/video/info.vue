@@ -57,7 +57,9 @@
         <el-input-number :min="0" v-model="videoInfo.episodeNum" controls-position="right" placeholder="请填写影视的总集数"/>
       </el-form-item>
 <!--      影视简介-->
-
+      <el-form-item label="影视简介">
+        <tinymce :height="300" v-model="videoInfo.description"/>
+      </el-form-item>
 
 <!--      影视封面-->
       <el-form-item label="影视封面">
@@ -87,7 +89,9 @@
 <script>
 import videoApi from "@/api/video"
 import classificationApi from '@/api/classification'
+import Tinymce from '@/components/Tinymce'
 export default {
+  components:{Tinymce},
   name: 'info.vue',
   created() {
     //获取数据用于下拉列表选择
@@ -184,5 +188,7 @@ export default {
 </script>
 
 <style scoped>
-
+.tinymce-container {
+  line-height: 29px;
+}
 </style>
