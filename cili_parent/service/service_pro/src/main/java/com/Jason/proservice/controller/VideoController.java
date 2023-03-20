@@ -21,4 +21,18 @@ public class VideoController {
         String id = videoService.saveVideoInfo(videoInfoVO);
         return R.ok().data("videoId",id);
     }
+
+    //根据影视id查询影视信息
+    @GetMapping("/getVideoInfo/{videoId}")
+    public R getVideoInfo(@PathVariable String videoId){
+        VideoInfoVO videoInfoVO = videoService.getVideoInfo(videoId);
+        return R.ok().data("videoInfo",videoInfoVO);
+    }
+
+    //修改影视信息
+    @PostMapping("updateVideoInfo")
+    public R updateVideoInfo(@RequestBody VideoInfoVO videoInfoVO){
+        videoService.updateVideoInfo(videoInfoVO);
+        return R.ok();
+    }
 }

@@ -78,11 +78,11 @@ export default {
     //跳到前一个页面
     previous(){
        console.log("previous")
-      this.$router.push({path:"/video/info/1"})
+      this.$router.push({path:"/video/info/"+this.videoID})
     },
     next(){
       //跳转到第二个步骤
-      this.$router.push({path:'/video/publish/1'})
+      this.$router.push({path:'/video/publish/'+this.videoID})
     }
   }
 }

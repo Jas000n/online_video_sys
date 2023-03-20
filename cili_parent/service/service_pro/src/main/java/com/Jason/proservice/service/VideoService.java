@@ -6,4 +6,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 public interface VideoService extends IService<Video> {
     String saveVideoInfo(VideoInfoVO videoInfoVO);
+
+    VideoInfoVO getVideoInfo(String videoId);
+
+    void updateVideoInfo(VideoInfoVO videoInfoVO);
 }

@@ -94,9 +94,16 @@ export default {
   components:{Tinymce},
   name: 'info.vue',
   created() {
-    //获取数据用于下拉列表选择
-    this.getListProducer();
-    this.getListClassification();
+    this.init();
+
+
+  },
+  //路由切换问题，当两个路由渲染同一个组件，组件不会被第二次created，导致生命周期的函数不会被执行第二次
+  watch:{
+    //监听，这里监听路由变化，每次路由发生变化就会执行
+    $route(to,from){
+      this.init()
+    }
   },
   data(){
     return{
@@ -115,9 +122,53 @@ export default {
       Lv1ClassList:{},
       Lv2ClassList:{},
       BASE_API:process.env.BASE_API,
+      videoId:"",
     }
   },
   methods:{
+    //created里会执行的函数
+    init(){
+      //获取路由中的id
+      if(this.$route.params && this.$route.params.id){
+        this.videoId = this.$route.params.id;
+        this.getVideoInfoById(this.videoId)
+      }else{
+        //获取数据用于下拉列表选择
+        this.getListProducer();
+        this.getListClassification();
+        this.videoInfo={
+          title:"",
+          classificationId:"",
+          classificationParentId:"",
+          producerId:"",
+          episodeNum:0,
+          description:"",
+          cover:"/static/videoCover.png",
+          price:0
+        }
+
+      }
+    },
+    //根据影视id查询信息,用于页面回显
+    getVideoInfoById(videoId) {
+      videoApi.getVideoInfo(videoId)
+        .then(result => {
+          this.videoInfo = result.data.videoInfo;
+          //查询所有分类
+          classificationApi.getClassificationList()
+            .then(result1 => {
+              this.Lv1ClassList = result1.data.list
+
+              //比较所有一级分类id哪个与回显的一级分类id一样,把他的二级分类数组取出来赋值给this.lv2
+              for(var i=0;i<this.Lv1ClassList.length;i++){
+                if(this.Lv1ClassList[i].id===this.videoInfo.classificationParentId){
+                  this.Lv2ClassList = this.Lv1ClassList[i].children;
+                }
+              }
+              this.getListProducer();
+            })
+        })
+    },
     //获取所有创作者
     getListProducer(){
       videoApi.getListProducer()

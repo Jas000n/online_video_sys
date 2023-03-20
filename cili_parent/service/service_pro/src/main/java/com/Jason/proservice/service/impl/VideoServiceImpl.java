@@ -43,4 +43,42 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
         return VID;
 
     }
+
+    //根据影视id查询信息
+    @Override
+    public VideoInfoVO getVideoInfo(String videoId) {
+        //先查询影视信息
+        Video video = baseMapper.selectById(videoId);
+        //再查询影视描述信息
+        VideoDescription videoDescription = videoDescriptionService.getById(video);
+        //赋值
+        VideoInfoVO videoInfoVO = new VideoInfoVO();
+        BeanUtils.copyProperties(video,videoInfoVO);
+        videoInfoVO.setDescription(videoDescription.getDescription());
+
+        return videoInfoVO;
+    }
+
+    //修改影视信息
+    @Override
+    public void updateVideoInfo(VideoInfoVO videoInfoVO) {
+
+        //修改video表
+        Video video = new Video();
+        BeanUtils.copyProperties(videoInfoVO,video);
+        int updateRows = baseMapper.updateById(video);
+        if(updateRows ==0){
+            throw new CiliException(20001,"修改影视信息失败!");
+        }
+
+        //修改videoDescription表
+        VideoDescription videoDescription = new VideoDescription();
+        videoDescription.setId(videoInfoVO.getId());
+        videoDescription.setDescription(videoDescription.getDescription());
+        Boolean result = videoDescriptionService.updateById(videoDescription);
+        if(!result){
+            throw new CiliException(20001,"修改影视描述信息失败!");
+        }
+
+    }
 }

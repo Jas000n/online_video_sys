@@ -20,5 +20,25 @@ export default {
         method: 'get'
       }
     )
+  },
+
+  //根据影视id查询影视信息
+  getVideoInfo(videoId){
+    return request(
+      {
+        url: `/service/video/getVideoInfo/${videoId}`,
+        method: 'get'
+      }
+    )
+  },
+  //修改影视信息
+  updateVideoInfo(videoInfo){
+    return request(
+      {
+        url: `/service/video/updateVideoInfo`,
+        method: 'post',
+        data:videoInfo
+      }
+    )
   }
 }
