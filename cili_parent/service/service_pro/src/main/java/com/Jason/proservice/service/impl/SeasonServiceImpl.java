@@ -7,6 +7,7 @@ import com.Jason.proservice.entity.vo.SeasonVO;
 import com.Jason.proservice.mapper.SeasonMapper;
 import com.Jason.proservice.service.EpisodeService;
 import com.Jason.proservice.service.SeasonService;
+import com.Jason.servicebase.exceptionhandler.CiliException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
@@ -57,5 +58,22 @@ public class SeasonServiceImpl extends ServiceImpl<SeasonMapper, Season> impleme
 
 
         return result;
+    }
+    //尽在该season里没有episode的时候允许删除
+    @Override
+    public Boolean deleteSeason(String seasonId) {
+        //根据seasonId去episode这张表里查询,如果能查到某episode属于这一季,就不删除
+        QueryWrapper<Episode> wrapper = new QueryWrapper<>();
+        wrapper.eq("seasonId",seasonId);
+        int count = episodeService.count(wrapper);
+        if(count>0){
+            //有数据,不能删除
+            throw new CiliException(20001,"该季不为空,不能删除");
+        }else{
+            //没数据,随便删除
+            int result = baseMapper.deleteById(seasonId);
+            return (result>0);
+        }
+
     }
 }

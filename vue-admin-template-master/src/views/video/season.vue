@@ -9,7 +9,7 @@
 
     </el-steps>
 
-    <el-button type="text">添加季和集</el-button>
+    <el-button type="text" @click="dialogSeasonFormVisible=true">添加影视季</el-button>
 <!--    展示季和集-->
     <ul class="seasonList" >
       <li v-for="season in SeasonsAndEpisodes" :key="season.id">
@@ -41,6 +41,21 @@
       </el-form-item>
 
     </el-form>
+    <!-- 添加和修改影视季表单 -->
+    <el-dialog :visible.sync="dialogSeasonFormVisible" title="添加季">
+      <el-form :model="season" label-width="120px">
+        <el-form-item label="本季标题">
+          <el-input v-model="season.title"/>
+        </el-form-item>
+        <el-form-item label="本季排序">
+          <el-input-number v-model="season.sort" :min="0" controls-position="right"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogSeasonFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveOrUpdate">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -63,10 +78,33 @@ export default {
     return{
       saveBthDisabled:false,
       SeasonsAndEpisodes:{},
-      videoID:""
+      videoID:"",
+      dialogSeasonFormVisible:false,
+      season:{
+        title:"",
+        sort:0
+      },
     }
   },
   methods:{
+    //添加season或修改season
+    saveOrUpdate(){
+      //设计videoid进来
+      this.season.videoId = this.videoID;
+      seasonApi.addSeason(this.season)
+        .then(result => {
+          //关闭弹窗
+          this.dialogSeasonFormVisible=false;
+          //提示成功
+          this.$message({
+            type:"success",
+            message:"添加成功!"
+          })
+          //刷新页面
+          this.getSeasonsAndEpisode();
+        })
+    },
+
     //根据影视id获得季和集
     getSeasonsAndEpisode() {
       seasonApi.getSeasonsAndEpisodes(this.videoID)

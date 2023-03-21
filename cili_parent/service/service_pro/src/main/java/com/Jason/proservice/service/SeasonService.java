@@ -9,4 +9,6 @@ import java.util.List;
 public interface SeasonService extends IService<Season> {
     //根据影视id,查询所有季
     List<SeasonVO> getSeasonById(String videoId);
+
+    Boolean deleteSeason(String seasonId);
 }

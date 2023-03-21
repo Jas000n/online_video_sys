@@ -197,8 +197,8 @@ export default {
     },
 
 
-    //点击下一步按钮
-    saveOrUpdate(){
+    //添加影视信息,在route里没有id的时候执行(或videoInfo里有id)
+    addVideo(){
       videoApi.addVideoInfo(this.videoInfo)
         .then(response =>{
 
@@ -211,6 +211,28 @@ export default {
           //跳转到第二个步骤
           this.$router.push({path:'/video/season/'+response.data.videoId})
         })
+    },
+    //更新影视信息,在route里有id的时候执行
+    updateVideo(){
+      videoApi. updateVideoInfo(this.videoInfo)
+        .then(response =>{
+          //提示信息
+          this.$message({
+            type:'success',
+            message:"修改影视信息成功!"
+          })
+          //跳转到第二个步骤
+          this.$router.push({path:'/video/season/'+this.videoId})
+        })
+    },
+    //点击下一步按钮
+    saveOrUpdate(){
+      //没有id
+      if(!this.videoInfo.id){
+          this.addVideo();
+      }else{
+        this.updateVideo()
+      }
 
     },
 
