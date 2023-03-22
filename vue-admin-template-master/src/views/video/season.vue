@@ -9,7 +9,7 @@
 
     </el-steps>
 
-    <el-button type="text" @click="dialogSeasonFormVisible=true">添加影视季</el-button>
+    <el-button type="text" @click="OpenSeasonDialog()">添加影视季</el-button>
 <!--    展示季和集-->
     <ul class="seasonList" >
       <li v-for="season in SeasonsAndEpisodes" :key="season.id">
@@ -17,9 +17,9 @@
           {{ season.title }}
 
           <span class="acts">
-                <el-button type="text">添加影视季</el-button>
-                <el-button style="" type="text">编辑</el-button>
-                <el-button type="text">删除</el-button>
+                <el-button type="text">添加影视集</el-button>
+                <el-button type="text" @click="openEdit(season.id)">编辑</el-button>
+                <el-button type="text" @click="removeSeason(season.id,season.title)">删除</el-button>
             </span>
         </p>
         <ul class="seasonList episodeList">
@@ -87,9 +87,56 @@ export default {
     }
   },
   methods:{
-    //添加season或修改season
-    saveOrUpdate(){
-      //设计videoid进来
+    //删除season
+    removeSeason(seasonId,seasonTitle){
+      this.$confirm('此操作将删除影视季:'+seasonTitle+', 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        seasonApi.deleteSeason(seasonId)
+          .then(response =>{
+            //删除成功
+            this.getSeasonsAndEpisode();
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+          })
+          .catch(error =>{
+            this.$message({
+              type: 'error',
+              message: '删除失败!'
+            });
+          })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+
+    },
+    //修改season
+    openEdit(seasonId){
+      console.log(123);
+      seasonApi.getSeasonById(seasonId)
+        .then(result => {
+          this.season = result.data.season
+          this.dialogSeasonFormVisible = true;
+        })
+    },
+    //点击添加的方法
+    OpenSeasonDialog(){
+      //打开弹窗
+      this.dialogSeasonFormVisible=true;
+      //将表单数据清空
+      this.season.title =""
+      this.season.sort=0;
+    },
+    //添加season
+    addSeason(){
+      //设置videoid进来
       this.season.videoId = this.videoID;
       seasonApi.addSeason(this.season)
         .then(result => {
@@ -103,6 +150,32 @@ export default {
           //刷新页面
           this.getSeasonsAndEpisode();
         })
+    },
+    //修改season
+    updateSeason(){
+      seasonApi.updateSeason(this.season)
+        .then(result => {
+          //关闭弹窗
+          this.dialogSeasonFormVisible=false;
+          //提示成功
+          this.$message({
+            type:"success",
+            message:"修改成功!"
+          })
+          //刷新页面
+          this.getSeasonsAndEpisode();
+        })
+    },
+    //添加season或修改season
+    saveOrUpdate(){
+      //有id说明是根据id回显的数据,这时候修改
+      if(this.season.id){
+        this.updateSeason()
+      }else{
+        //没有id的时候,属于添加,mybatisPlus写数据库的时候会生成id
+        this.addSeason()
+      }
+
     },
 
     //根据影视id获得季和集
@@ -137,7 +210,6 @@ export default {
   position: relative;
 }
 .seasonList p{
-  float: left;
   font-size: 20px;
   margin: 10px 0;
   padding: 10px;

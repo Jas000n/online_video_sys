@@ -64,7 +64,7 @@ public class SeasonServiceImpl extends ServiceImpl<SeasonMapper, Season> impleme
     public Boolean deleteSeason(String seasonId) {
         //根据seasonId去episode这张表里查询,如果能查到某episode属于这一季,就不删除
         QueryWrapper<Episode> wrapper = new QueryWrapper<>();
-        wrapper.eq("seasonId",seasonId);
+        wrapper.eq("season_id",seasonId);
         int count = episodeService.count(wrapper);
         if(count>0){
             //有数据,不能删除
