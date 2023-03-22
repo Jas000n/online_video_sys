@@ -17,7 +17,7 @@
           {{ season.title }}
 
           <span class="acts">
-                <el-button type="text">添加影视集</el-button>
+                <el-button type="text" @click="openEpisodeDialogue(season.id)">添加影视集</el-button>
                 <el-button type="text" @click="openEdit(season.id)">编辑</el-button>
                 <el-button type="text" @click="removeSeason(season.id,season.title)">删除</el-button>
             </span>
@@ -34,6 +34,32 @@
         </ul>
       </li>
     </ul>
+    <!-- 添加和修改episode表单 -->
+    <el-dialog :visible.sync="dialogEpisodeFormVisible" title="添加集">
+      <el-form :model="episode" label-width="120px">
+        <el-form-item label="单集标题">
+          <el-input v-model="episode.title"/>
+        </el-form-item>
+        <el-form-item label="单集排序">
+          <el-input-number v-model="episode.sort" :min="0" controls-position="right"/>
+        </el-form-item>
+        <el-form-item label="是否免费">
+          <el-radio-group v-model="episode.free">
+            <el-radio :label="true">免费</el-radio>
+            <el-radio :label="false">默认</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="上传视频">
+          <!-- TODO -->
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogEpisodeFormVisible = false">取 消</el-button>
+        <el-button :disabled="saveEpisodeBtnDisabled" type="primary" @click="saveOrUpdateEpisode">确 定</el-button>
+      </div>
+    </el-dialog>
+
+
     <el-form label-width="120px">
       <el-form-item>
         <el-button @click="previous">上一步</el-button>
@@ -62,6 +88,7 @@
 
 <script>
 import seasonApi from "@/api/season"
+import episodeApi from "@/api/episode"
 export default {
 
   name: 'season.vue',
@@ -80,6 +107,13 @@ export default {
       SeasonsAndEpisodes:{},
       videoID:"",
       dialogSeasonFormVisible:false,
+      dialogEpisodeFormVisible:false,
+      episode:{
+        title:'',
+        sort:'',
+        free:0,
+        videoSourceId:'',
+      },
       season:{
         title:"",
         sort:0
@@ -182,19 +216,48 @@ export default {
     getSeasonsAndEpisode() {
       seasonApi.getSeasonsAndEpisodes(this.videoID)
         .then(result => {
-          console.log(result)
+          // console.log(result)
           this.SeasonsAndEpisodes = result.data.seasons;
         })
     },
     //跳到前一个页面
     previous(){
-       console.log("previous")
+       // console.log("previous")
       this.$router.push({path:"/video/info/"+this.videoID})
     },
     next(){
       //跳转到第二个步骤
       this.$router.push({path:'/video/publish/'+this.videoID})
-    }
+    },
+    //以下所有函数是为episode服务的*******************************************
+    //打开集信息编辑弹窗
+    openEpisodeDialogue(seasonId){
+      this.dialogEpisodeFormVisible = true;
+      this.episode.seasonId = seasonId;
+    },
+    //添加或修改episode
+    addEpisode(){
+      console.log(456)
+      this.episode.videoId = this.videoID;
+      episodeApi.addEpisode(this.episode)
+        .then(result => {
+          //关闭弹窗
+          this.dialogEpisodeFormVisible=false;
+          //提示成功
+          this.$message({
+            type:"success",
+            message:"添加成功!"
+          })
+          //刷新页面
+          this.getSeasonsAndEpisode();
+        })
+    },
+    //添加或修改episode
+    saveOrUpdateEpisode(){
+      console.log(123)
+      this.addEpisode()
+    },
+
   }
 }
 </script>

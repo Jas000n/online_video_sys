@@ -38,5 +38,5 @@ export default {
     url: `/service/season/deleteById/${seasonId}`,
     method: 'delete',
   })
-},
+  },
 }
