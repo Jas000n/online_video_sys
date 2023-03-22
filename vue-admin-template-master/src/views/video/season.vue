@@ -27,7 +27,7 @@
             <p>{{ episode.title }}
               <span class="acts">
                         <el-button type="text">编辑</el-button>
-                        <el-button type="text">删除</el-button>
+                        <el-button type="text" @click="deleteEpisode(episode.title,episode.id)">删除</el-button>
               </span>
             </p>
           </li>
@@ -44,9 +44,9 @@
           <el-input-number v-model="episode.sort" :min="0" controls-position="right"/>
         </el-form-item>
         <el-form-item label="是否免费">
-          <el-radio-group v-model="episode.free">
-            <el-radio :label="true">免费</el-radio>
-            <el-radio :label="false">默认</el-radio>
+          <el-radio-group v-model="episode.isFree">
+            <el-radio :label="1">免费</el-radio>
+            <el-radio :label="0">默认</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="上传视频">
@@ -111,7 +111,7 @@ export default {
       episode:{
         title:'',
         sort:'',
-        free:0,
+        isFree:0,
         videoSourceId:'',
       },
       season:{
@@ -237,7 +237,6 @@ export default {
     },
     //添加或修改episode
     addEpisode(){
-      console.log(456)
       this.episode.videoId = this.videoID;
       episodeApi.addEpisode(this.episode)
         .then(result => {
@@ -250,12 +249,44 @@ export default {
           })
           //刷新页面
           this.getSeasonsAndEpisode();
+          this.episode.title ="";
+          this.episode.isfree=0;
+          this.episode.sort=0;
+          this.videoSourceId=''
         })
     },
     //添加或修改episode
     saveOrUpdateEpisode(){
-      console.log(123)
       this.addEpisode()
+    },
+    //删除episode
+    deleteEpisode(title,id){
+      this.$confirm('此操作将删除影视集:'+title+', 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        episodeApi.deleteEpisode(id)
+          .then(response =>{
+            //删除成功
+            this.getSeasonsAndEpisode();
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+          })
+          .catch(error =>{
+            this.$message({
+              type: 'error',
+              message: '删除失败!'
+            });
+          })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
     },
 
   }
@@ -297,7 +328,6 @@ export default {
 
 .episodeList p{
 
-  float: left;
   font-size: 14px;
   margin: 10px 0;
   padding: 10px;
