@@ -2,6 +2,7 @@ package com.Jason.proservice.controller;
 
 import com.Jason.common.utils.R;
 import com.Jason.proservice.entity.vo.VideoInfoVO;
+import com.Jason.proservice.entity.vo.VideoPublishVO;
 import com.Jason.proservice.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,5 +35,12 @@ public class VideoController {
     public R updateVideoInfo(@RequestBody VideoInfoVO videoInfoVO){
         videoService.updateVideoInfo(videoInfoVO);
         return R.ok();
+    }
+
+    //根据videoId查询影视确认信息
+    @GetMapping("getPublishVideoInfo/{id}")
+    public R getPublishVideoInfo(@PathVariable String id){
+        VideoPublishVO videoPublishVO = videoService.getPublishVideoInfo(id);
+        return R.ok().data("PublishVideoInfo",videoPublishVO);
     }
 }

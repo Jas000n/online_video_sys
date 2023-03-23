@@ -157,7 +157,24 @@
         </dependency>
 
     </dependencies>
-
+<!--    下面这个配置用于读到xml文件,因为maven在编译项目到target文件夹的时候不会扫描到xml文件-->
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>*.properties</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
 
 
 </project>

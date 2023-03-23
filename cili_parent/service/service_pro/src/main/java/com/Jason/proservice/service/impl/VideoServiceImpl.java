@@ -3,6 +3,7 @@ package com.Jason.proservice.service.impl;
 import com.Jason.proservice.entity.Video;
 import com.Jason.proservice.entity.VideoDescription;
 import com.Jason.proservice.entity.vo.VideoInfoVO;
+import com.Jason.proservice.entity.vo.VideoPublishVO;
 import com.Jason.proservice.mapper.VideoMapper;
 import com.Jason.proservice.service.VideoDescriptionService;
 import com.Jason.proservice.service.VideoService;
@@ -80,5 +81,12 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
             throw new CiliException(20001,"修改影视描述信息失败!");
         }
 
+    }
+    //根据videoId查询影视确认信息
+    @Override
+    public VideoPublishVO getPublishVideoInfo(String id) {
+        //调用自己写的mapper
+        VideoPublishVO publishVideoInfo = baseMapper.getPublishVideoInfo(id);
+        return publishVideoInfo;
     }
 }

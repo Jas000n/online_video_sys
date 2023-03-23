@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.Jason.proservice.mapper.VideoMapper">
-
+<!--根据影视id获取影视确认信息-->
+    <select id="getPublishVideoInfo" parameterType="String"  resultType="com.Jason.proservice.entity.vo.VideoPublishVO">
+        select v.id, v.price, v.episode_num AS episodeNum , vd.description, p.name as producerName, c1.title AS classificationParentId ,
+                c2.title AS classificationId, v.cover, v.title
+        from video v    Left outer join video_description vd on v.id = vd.id
+                        left outer join producer p on v.producer_id = p.id
+                        left outer join classification c1 on v.classification_parent_id = c1.id
+                        left outer join classification c2 on v.classification_id = c2.id
+        where v.id =#{videoId}
+    </select>
 </mapper>
