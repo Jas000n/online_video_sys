@@ -40,5 +40,24 @@ export default {
         data:videoInfo
       }
     )
-  }
+  },
+  //根据影视id查询videInfoVO信息,用于publish数据页面数据显示
+  getPublishVideoInfoVOById(videoId){
+    return request(
+      {
+        url: `/service/video/getPublishVideoInfo/${videoId}`,
+        method: 'get'
+      }
+    )
+
+  },
+  publishVideo(videoId){
+    return request(
+      {
+        url: `/service/video/publishVideo/${videoId}`,
+        method: 'post'
+      }
+    )
+
+  },
 }

@@ -1,6 +1,7 @@
 package com.Jason.proservice.controller;
 
 import com.Jason.common.utils.R;
+import com.Jason.proservice.entity.Video;
 import com.Jason.proservice.entity.vo.VideoInfoVO;
 import com.Jason.proservice.entity.vo.VideoPublishVO;
 import com.Jason.proservice.service.VideoService;
@@ -41,6 +42,15 @@ public class VideoController {
     @GetMapping("getPublishVideoInfo/{id}")
     public R getPublishVideoInfo(@PathVariable String id){
         VideoPublishVO videoPublishVO = videoService.getPublishVideoInfo(id);
-        return R.ok().data("PublishVideoInfo",videoPublishVO);
+        return R.ok().data("publishVideoInfo",videoPublishVO);
+    }
+    //最终发布课程
+    @PostMapping("publishVideo/{videoId}")
+    public R publishVideo(@PathVariable String videoId){
+        Video video = new Video();
+        video.setId(videoId);
+        video.setStatus("Normal");
+        videoService.updateById(video);
+        return R.ok();
     }
 }
