@@ -30,5 +30,17 @@ public class EpisodeController {
         episodeService.removeById(id);
         return  R.ok();
     }
+    //根据id找到集
+    @GetMapping("/getEpisodeById/{id}")
+    public R getEpisodeById(@PathVariable String id){
+        Episode byId = episodeService.getById(id);
+        return R.ok().data("episode",byId);
+    }
     //修改集
+    @PostMapping("updateEpisode")
+    public R updateEpisode(@RequestBody Episode episode){
+        episodeService.updateById(episode);
+        return R.ok();
+    }
+
 }

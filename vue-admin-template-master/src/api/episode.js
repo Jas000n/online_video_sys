@@ -18,5 +18,20 @@ export default {
       method: 'delete',
     })
   },
+  //根据集id找到episode,回显
+  getEpisodeById(id){
+    return request({
+      url: `/service/episode/getEpisodeById/${id}`,
+      method: 'get',
+    })
+  },
+  //修改episode
+  updateEpisode(episode){
+    return request({
+      url: `/service/episode/updateEpisode`,
+      method: 'post',
+      data:episode
+    })
+  }
 
 }

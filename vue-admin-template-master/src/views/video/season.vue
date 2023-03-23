@@ -26,7 +26,7 @@
           <li v-for="episode in season.children" :key="episode.key">
             <p>{{ episode.title }}
               <span class="acts">
-                        <el-button type="text">编辑</el-button>
+                        <el-button type="text" @click="editEpisode(episode.id)">编辑</el-button>
                         <el-button type="text" @click="deleteEpisode(episode.title,episode.id)">删除</el-button>
               </span>
             </p>
@@ -249,15 +249,43 @@ export default {
           })
           //刷新页面
           this.getSeasonsAndEpisode();
-          this.episode.title ="";
-          this.episode.isfree=0;
-          this.episode.sort=0;
-          this.videoSourceId=''
+          this.episode ={
+              title:'',
+              sort:'',
+              isFree:0,
+              videoSourceId:'',
+          }
         })
+    },
+    //
+    updateEpisode(){
+      episodeApi.updateEpisode(this.episode)
+        .then(result => {
+        //关闭弹窗
+        this.dialogEpisodeFormVisible=false;
+        //提示成功
+        this.$message({
+          type:"success",
+          message:"修改成功!"
+        })
+        //刷新页面
+        this.getSeasonsAndEpisode();
+        this.episode ={
+          title:'',
+          sort:'',
+          isFree:0,
+          videoSourceId:'',
+        }
+      })
     },
     //添加或修改episode
     saveOrUpdateEpisode(){
-      this.addEpisode()
+      //有id了,就修改
+      if(this.episode.id){
+        this.updateEpisode()
+      }else{
+        this.addEpisode()
+      }
     },
     //删除episode
     deleteEpisode(title,id){
@@ -288,6 +316,21 @@ export default {
         });
       });
     },
+    //修改集
+    editEpisode(id){
+      episodeApi.getEpisodeById(id)
+        .then(result => {
+          let episodeResult = result.data.episode
+          this.episode.title =episodeResult.title;
+          this.episode.isFree=episodeResult.isFree;
+          this.episode.sort=episodeResult.sort;
+          this.episode.videoSourceId=episodeResult.videoSourceId;
+          this.episode.id = id;
+          console.log(this.episode)
+          this.dialogEpisodeFormVisible=true;
+
+        })
+    }
 
   }
 }
