@@ -5,6 +5,8 @@ import com.Jason.proservice.entity.VideoDescription;
 import com.Jason.proservice.entity.vo.VideoInfoVO;
 import com.Jason.proservice.entity.vo.VideoPublishVO;
 import com.Jason.proservice.mapper.VideoMapper;
+import com.Jason.proservice.service.EpisodeService;
+import com.Jason.proservice.service.SeasonService;
 import com.Jason.proservice.service.VideoDescriptionService;
 import com.Jason.proservice.service.VideoService;
 import com.Jason.servicebase.exceptionhandler.CiliException;
@@ -18,6 +20,10 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
 
     @Autowired
     private VideoDescriptionService videoDescriptionService;
+    @Autowired
+    private SeasonService seasonService;
+    @Autowired
+    private EpisodeService episodeService;
     //添加影视信息的基本方法
     @Override
     public String saveVideoInfo(VideoInfoVO videoInfoVO) {
@@ -88,5 +94,21 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
         //调用自己写的mapper
         VideoPublishVO publishVideoInfo = baseMapper.getPublishVideoInfo(id);
         return publishVideoInfo;
+    }
+
+    //在删除影视的时候,顺便把影视下的所有集和季都删了
+    @Override
+    public void removeVideoById(String id) {
+        //根据影视id删除episode
+        episodeService.removeByVideoId(id);
+        //根据影视id删除season
+        seasonService.removeByVideoId(id);
+        //根据影视id删除description
+        videoDescriptionService.removeByVideoId(id);
+        //删除video
+        int result = baseMapper.deleteById(id);
+        if(result==0){
+            throw new CiliException(20001,"删除视频失败!");
+        }
     }
 }

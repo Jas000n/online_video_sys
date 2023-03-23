@@ -76,4 +76,11 @@ public class SeasonServiceImpl extends ServiceImpl<SeasonMapper, Season> impleme
         }
 
     }
+    //根据影视id删除season
+    @Override
+    public void removeByVideoId(String id) {
+        QueryWrapper<Season> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("video_id",id);
+        baseMapper.delete(queryWrapper);
+    }
 }

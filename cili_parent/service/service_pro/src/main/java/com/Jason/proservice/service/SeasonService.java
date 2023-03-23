@@ -11,4 +11,6 @@ public interface SeasonService extends IService<Season> {
     List<SeasonVO> getSeasonById(String videoId);
 
     Boolean deleteSeason(String seasonId);
+    //根据影视id删除season
+    void removeByVideoId(String id);
 }

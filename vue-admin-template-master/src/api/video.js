@@ -60,4 +60,23 @@ export default {
     )
 
   },
+  //current 当前页，limit每页上限，producerQuery条件对象
+  getVideoListPage(current,limit,videoQuery) {
+    // console.log(current,"current123")
+    return request({
+      url: `/service/video/pageVideoCondition/${current}/${limit}`,
+      method: 'post',
+      //data表示把对象转化为json传递到接口里
+      data: videoQuery
+    })
+  },
+  //通过影视id删除
+  removeVideoByID(id){
+    return request({
+        url:`/service/video/delete/${id}`,
+        method:"delete"
+      }
+
+    )
+  },
 }

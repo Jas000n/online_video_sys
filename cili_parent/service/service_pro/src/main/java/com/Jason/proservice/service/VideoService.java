@@ -13,4 +13,7 @@ public interface VideoService extends IService<Video> {
     void updateVideoInfo(VideoInfoVO videoInfoVO);
 
     VideoPublishVO getPublishVideoInfo(String id);
+
+    //在删除影视的时候,顺便把影视下的所有集和季都删了
+    void removeVideoById(String id);
 }

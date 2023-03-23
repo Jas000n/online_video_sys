@@ -47,7 +47,6 @@ public class ProducerController {
     //根据id，逻辑删除讲师
     @DeleteMapping("/delete/{id}")
     public R deleteByID(@PathVariable String id){
-        System.out.println(id);
         boolean b = producerService.removeById(id);
         if(b){
             return R.ok();

@@ -137,12 +137,12 @@ export default {
               message: '删除成功!'
             });
           })
-          .catch(error =>{
-            this.$message({
-              type: 'error',
-              message: '删除失败!'
-            });
-          })
+          // .catch(error =>{
+          //   this.$message({
+          //     type: 'error',
+          //     message: '删除失败!'
+          //   });
+          // })
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -306,7 +306,7 @@ export default {
           .catch(error =>{
             this.$message({
               type: 'error',
-              message: '删除失败!'
+              message: '删除失败!该季不为空!'
             });
           })
       }).catch(() => {
