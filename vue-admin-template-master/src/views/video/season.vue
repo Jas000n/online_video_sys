@@ -50,7 +50,25 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="上传视频">
-          <!-- TODO -->
+          <el-upload
+            :on-success="handleVodUploadSuccess"
+            :on-remove="handleVodRemove"
+            :before-remove="beforeVodRemove"
+            :on-exceed="handleUploadExceed"
+            :file-list="fileList"
+            :action="BASE_API+'/vod/video/uploadAliYunVideo'"
+            :limit="1"
+            class="upload-demo">
+            <el-button size="small" type="primary">上传视频</el-button>
+            <el-tooltip placement="right-end">
+              <div slot="content">最大支持1G，<br>
+                支持3GP、ASF、AVI、DAT、DV、FLV、F4V、<br>
+                GIF、M2T、M4V、MJ2、MJPEG、MKV、MOV、MP4、<br>
+                MPE、MPG、MPEG、MTS、OGG、QT、RM、RMVB、<br>
+                SWF、TS、VOB、WMV、WEBM 等视频格式上传</div>
+              <i class="el-icon-question"/>
+            </el-tooltip>
+          </el-upload>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -113,14 +131,27 @@ export default {
         sort:'',
         isFree:0,
         videoSourceId:'',
+        videoOriginalName:"",
       },
       season:{
         title:"",
         sort:0
       },
+      fileList: [],//上传文件列表
+      BASE_API: process.env.BASE_API // 接口API地址
     }
   },
   methods:{
+    //以下方法都是用于视频vod上传的*****************************************************************************************
+    //上传视频成功调用的方法
+    handleVodUploadSuccess(response, file, fileList){
+        this.episode.videoSourceId = response.data.videoId
+    },
+    //
+    handleUploadExceed(){
+      this.$message.warning("想要重新上传视频,请删除已上传的视频!")
+    },
+    //以下方法都是用于season增删改查的***************************************************************************************
     //删除season
     removeSeason(seasonId,seasonTitle){
       this.$confirm('此操作将删除影视季:'+seasonTitle+', 是否继续?', '提示', {
@@ -229,7 +260,7 @@ export default {
       //跳转到第二个步骤
       this.$router.push({path:'/video/publish/'+this.videoID})
     },
-    //以下所有函数是为episode服务的*******************************************
+    //以下所有函数是为episode服务的*****************************************************************************************
     //打开集信息编辑弹窗
     openEpisodeDialogue(seasonId){
       this.dialogEpisodeFormVisible = true;
