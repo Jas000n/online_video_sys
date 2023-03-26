@@ -164,8 +164,10 @@ export default {
               message:"删除阿里云视频成功!"
             })
           })
-      //清空列表
+      //清空列表和相应字段
       this.fileList =[]
+      this.episode.videoSourceId=''
+      this.episode.videoOriginalName=''
     },
     //以下方法都是用于season增删改查的***************************************************************************************
     //删除season
