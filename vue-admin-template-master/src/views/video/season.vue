@@ -147,9 +147,25 @@ export default {
     handleVodUploadSuccess(response, file, fileList){
         this.episode.videoSourceId = response.data.videoId
     },
-    //
+    //在文件数量超出限制时的回调
     handleUploadExceed(){
       this.$message.warning("想要重新上传视频,请删除已上传的视频!")
+    },
+    //点击删除视频的回调
+    beforeVodRemove(file,fileList){
+        return this.$confirm(`确定移除${file.name}?`)
+    },
+    //点击确定删除之后的回调
+    handleVodRemove(){
+        episodeApi.deleteAliYunVideo(this.episode.videoSourceId)
+          .then(result => {
+            this.$message({
+              type:'success',
+              message:"删除阿里云视频成功!"
+            })
+          })
+      //清空列表
+      this.fileList =[]
     },
     //以下方法都是用于season增删改查的***************************************************************************************
     //删除season

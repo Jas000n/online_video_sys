@@ -32,6 +32,13 @@ export default {
       method: 'post',
       data:episode
     })
+  },
+  //删除阿里云里的视频
+  deleteAliYunVideo(id){
+    return request({
+      url: `/vod/video/removeAliYunVideo/${id}`,
+      method: 'delete',
+    })
   }
 
 }
