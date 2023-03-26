@@ -1,0 +1,87 @@
+/usr/lib/jvm/java-11-openjdk-amd64/bin/java  -Xms512m -Xmx512m -Xmn256m -Dnacos.standalone=true -cp .:/home/jason/桌面/online_video_sys/nacos/plugins/cmdb/*.jar:/home/jason/桌面/online_video_sys/nacos/plugins/mysql/*.jar -Xlog:gc*:file=/home/jason/桌面/online_video_sys/nacos/logs/nacos_gc.log:time,tags:filecount=10,filesize=102400 -Dnacos.home=/home/jason/桌面/online_video_sys/nacos -Dloader.path=/home/jason/桌面/online_video_sys/nacos/plugins/health -jar /home/jason/桌面/online_video_sys/nacos/target/nacos-server.jar  --spring.config.location=classpath:/,classpath:/config/,file:./,file:./config/,file:/home/jason/桌面/online_video_sys/nacos/conf/ --logging.config=/home/jason/桌面/online_video_sys/nacos/conf/nacos-logback.xml --server.max-http-header-size=524288
+
+         ,--.
+       ,--.'|
+   ,--,:  : |                                           Nacos 1.1.4
+,`--.'`|  ' :                       ,---.               Running in stand alone mode, All function modules
+|   :  :  | |                      '   ,'\   .--.--.    Port: 8848
+:   |   \ | :  ,--.--.     ,---.  /   /   | /  /    '   Pid: 39706
+|   : '  '; | /       \   /     \.   ; ,. :|  :  /`./   Console: http://192.168.0.105:8848/nacos/index.html
+'   ' ;.    ;.--.  .-. | /    / ''   | |: :|  :  ;_
+|   | | \   | \__\/: . ..    ' / '   | .; : \  \    `.      https://nacos.io
+'   : |  ; .' ," .--.; |'   ; :__|   :    |  `----.   \
+|   | '`--'  /  /  ,.  |'   | '.'|\   \  /  /  /`--'  /
+'   : |     ;  :   .'   \   :    : `----'  '--'.     /
+;   |.'     |  ,     .-./\   \  /            `--'---'
+'---'        `--`---'     `----'
+
+2023-03-26 22:03:43,020 INFO Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration$$EnhancerBySpringCGLIB$$51a79cb6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+
+2023-03-26 22:03:43,071 INFO Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+
+2023-03-26 22:03:43,072 INFO Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@2ece4966' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+
+2023-03-26 22:03:43,075 INFO Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration$$EnhancerBySpringCGLIB$$767c3f68] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+
+2023-03-26 22:03:43,077 INFO Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+
+2023-03-26 22:03:43,381 INFO Tomcat initialized with port(s): 8848 (http)
+
+2023-03-26 22:03:43,495 INFO Root WebApplicationContext: initialization completed in 1726 ms
+
+2023-03-26 22:03:45,132 INFO Initializing ExecutorService 'applicationTaskExecutor'
+
+2023-03-26 22:03:45,301 INFO Adding welcome page: class path resource [static/index.html]
+
+2023-03-26 22:03:45,611 INFO Creating filter chain: Ant [pattern='/'], []
+
+2023-03-26 22:03:45,611 INFO Creating filter chain: Ant [pattern='/**/*.css'], []
+
+2023-03-26 22:03:45,611 INFO Creating filter chain: Ant [pattern='/**/*.js'], []
+
+2023-03-26 22:03:45,611 INFO Creating filter chain: Ant [pattern='/**/*.html'], []
+
+2023-03-26 22:03:45,611 INFO Creating filter chain: Ant [pattern='/**/*.map'], []
+
+2023-03-26 22:03:45,611 INFO Creating filter chain: Ant [pattern='/**/*.svg'], []
+
+2023-03-26 22:03:45,611 INFO Creating filter chain: Ant [pattern='/**/*.png'], []
+
+2023-03-26 22:03:45,611 INFO Creating filter chain: Ant [pattern='/**/*.ico'], []
+
+2023-03-26 22:03:45,611 INFO Creating filter chain: Ant [pattern='/console-fe/public/**'], []
+
+2023-03-26 22:03:45,611 INFO Creating filter chain: Ant [pattern='/v1/auth/login'], []
+
+2023-03-26 22:03:45,611 INFO Creating filter chain: Ant [pattern='/v1/console/health/**'], []
+
+2023-03-26 22:03:45,611 INFO Creating filter chain: Ant [pattern='/v1/cs/**'], []
+
+2023-03-26 22:03:45,611 INFO Creating filter chain: Ant [pattern='/v1/ns/**'], []
+
+2023-03-26 22:03:45,611 INFO Creating filter chain: Ant [pattern='/v1/cmdb/**'], []
+
+2023-03-26 22:03:45,611 INFO Creating filter chain: Ant [pattern='/actuator/**'], []
+
+2023-03-26 22:03:45,611 INFO Creating filter chain: Ant [pattern='/v1/console/server/**'], []
+
+2023-03-26 22:03:45,639 INFO Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3e4e4c1, org.springframework.security.web.context.SecurityContextPersistenceFilter@196ae579, org.springframework.security.web.header.HeaderWriterFilter@c29fe36, org.springframework.security.web.authentication.logout.LogoutFilter@6fc6deb7, com.alibaba.nacos.console.filter.JwtAuthenticationTokenFilter@7e7f3cfd, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@41853299, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4f0cab0a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3ae126d1, org.springframework.security.web.session.SessionManagementFilter@625a4ff, org.springframework.security.web.access.ExceptionTranslationFilter@1507c3c3, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@77f68df]
+
+2023-03-26 22:03:45,718 INFO Exposing 2 endpoint(s) beneath base path '/actuator'
+
+2023-03-26 22:03:45,744 INFO Initializing ExecutorService 'taskScheduler'
+
+2023-03-26 22:03:45,831 INFO Tomcat started on port(s): 8848 (http) with context path '/nacos'
+
+2023-03-26 22:03:45,836 INFO Nacos Log files: /home/jason/桌面/online_video_sys/nacos/logs/
+
+2023-03-26 22:03:45,836 INFO Nacos Conf files: /home/jason/桌面/online_video_sys/nacos/conf/
+
+2023-03-26 22:03:45,836 INFO Nacos Data files: /home/jason/桌面/online_video_sys/nacos/data/
+
+2023-03-26 22:03:45,836 INFO Nacos started successfully in stand alone mode.
+
+2023-03-26 22:03:49,775 INFO Initializing Servlet 'dispatcherServlet'
+
+2023-03-26 22:03:49,780 INFO Completed initialization in 5 ms
+
