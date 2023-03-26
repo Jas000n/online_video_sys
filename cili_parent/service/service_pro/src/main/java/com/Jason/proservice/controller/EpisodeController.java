@@ -1,8 +1,11 @@
 package com.Jason.proservice.controller;
 
 import com.Jason.common.utils.R;
+import com.Jason.proservice.client.VodClient;
 import com.Jason.proservice.entity.Episode;
 import com.Jason.proservice.service.EpisodeService;
+import com.alibaba.excel.util.StringUtils;
+import org.apache.poi.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +18,8 @@ public class EpisodeController {
 
     @Autowired
     private EpisodeService episodeService;
+    @Autowired
+    private VodClient vodClient;
 
     //添加集
     @PostMapping("/addEpisode")
@@ -24,9 +29,17 @@ public class EpisodeController {
     }
 
     //删除集
-    //TODO 后续要完善:删除该集的时候,需要把集包含的视频等信息都删除
+    //删除该集的时候,需要把集包含的视频等信息都删除
     @DeleteMapping("delete/{id}")
     public R deleteEpisode(@PathVariable String id){
+        //先跟据episode id得到对应的存储在阿里云vod里的视频id,再根据这个id把阿里云里的视频删除
+        Episode byId = episodeService.getById(id);
+        String AliYunVideoId = byId.getVideoSourceId();
+        //如果这集没有上传视频就不用删除了
+        if(!StringUtils.isEmpty(AliYunVideoId)){
+            vodClient.removeAliYunVideo(AliYunVideoId);
+        }
+        //删除该集
         episodeService.removeById(id);
         return  R.ok();
     }
