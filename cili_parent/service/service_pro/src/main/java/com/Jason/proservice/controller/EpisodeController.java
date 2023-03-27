@@ -4,6 +4,7 @@ import com.Jason.common.utils.R;
 import com.Jason.proservice.client.VodClient;
 import com.Jason.proservice.entity.Episode;
 import com.Jason.proservice.service.EpisodeService;
+import com.Jason.servicebase.exceptionhandler.CiliException;
 import com.alibaba.excel.util.StringUtils;
 import org.apache.poi.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,11 @@ public class EpisodeController {
         String AliYunVideoId = byId.getVideoSourceId();
         //如果这集没有上传视频就不用删除了
         if(!StringUtils.isEmpty(AliYunVideoId)){
-            vodClient.removeAliYunVideo(AliYunVideoId);
+            R r = vodClient.removeAliYunVideo(AliYunVideoId);
+            if(r.getCode()==20001){
+                System.out.println("熔断了");
+                throw new CiliException(20001,"删除视频失败,服务熔断");
+            }
         }
         //删除该集
         episodeService.removeById(id);
