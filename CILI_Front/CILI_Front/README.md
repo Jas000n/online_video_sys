@@ -1,6 +1,6 @@
-# {{ name }}
+# CILI_Front
 
-> {{ description }}
+> CILICILI User Page
 
 ## Build Setup
 
