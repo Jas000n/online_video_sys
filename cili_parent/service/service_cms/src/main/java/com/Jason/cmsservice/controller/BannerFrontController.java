@@ -4,6 +4,7 @@ import com.Jason.cmsservice.entity.CrmBanner;
 import com.Jason.cmsservice.service.CrmBannerService;
 import com.Jason.common.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ public class BannerFrontController {
     private CrmBannerService crmBannerService;
 
     //查询banner,进行幻灯片显示
+    @Cacheable(key = "'frontBanner'",value = "banner")
     @GetMapping("getAll")
     public R getAllBanner(){
         List<CrmBanner> allBanners = crmBannerService.getAllBanner();
