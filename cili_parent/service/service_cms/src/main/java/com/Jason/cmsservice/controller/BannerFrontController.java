@@ -19,7 +19,7 @@ public class BannerFrontController {
     @Autowired
     private CrmBannerService crmBannerService;
 
-    //查询所有banner,进行幻灯片显示
+    //查询banner,进行幻灯片显示
     @GetMapping("getAll")
     public R getAllBanner(){
         List<CrmBanner> allBanners = crmBannerService.getAllBanner();

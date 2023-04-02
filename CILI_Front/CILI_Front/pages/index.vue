@@ -4,16 +4,14 @@
     <!-- 幻灯片 开始 -->
     <div v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" style="background: #040B1B;">
-          <a target="_blank" href="/">
-            <img src="~/assets/photo/banner/1525939573202.jpg" alt="首页banner">
+        <div v-for="banner in bannerList" :key="banner.id" class="swiper-slide" style="background: #040B1B;">
+          <a target="_blank" :href="banner.linkUrl">
+            <img width="100%"
+                 :src="banner.imageUrl"
+                 :alt="banner.title"/>
           </a>
         </div>
-        <div class="swiper-slide" style="background: #040B1B;">
-          <a target="_blank" href="/">
-            <img src="~/assets/photo/banner/1525939573203.jpg" alt="首页banner">
-          </a>
-        </div>
+
       </div>
       <div class="swiper-pagination swiper-pagination-white"></div>
       <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
@@ -33,30 +31,32 @@
           <div>
             <article class="comm-course-list">
               <ul class="of" id="bna">
-                <li>
+                <li v-for="(video, index) in videoList" v-bind:key="index">
                   <div class="cc-l-wrap">
                     <section class="course-img">
                       <img
-                        src="~/assets/photo/video/1442295379715.jpg"
+                        :src="video.cover"
                         class="img-responsive"
-                        alt="猫和老鼠"
-                      >
+                        :alt="video.title">
                       <div class="cc-mask">
-                        <a href="#" title="开始学习" class="comm-btn c-btn-1">开始学习</a>
+                        <a :href="'/video/'+video.id" title="开始观看" class="comm-btn c-btn-1">开始观看</a>
                       </div>
                     </section>
                     <h3 class="hLh30 txtOf mt10">
-                      <a href="#" title="猫和老鼠" class="course-title fsize18 c-333">猫和老鼠</a>
+                      <a href="#" :title="video.title" class="course-title fsize18 c-333">{{video.title}}</a>
                     </h3>
                     <section class="mt10 hLh20 of">
-                      <span class="fr jgTag bg-green">
-                        <i class="c-fff fsize12 f-fA">免费</i>
-                      </span>
+                      <span class="fr jgTag bg-green" v-if="Number(video.price) === 0">
+                    <i class="c-fff fsize12 f-fA">免费</i>
+                    </span>
+                      <span class="fr jgTag bg-green" v-else>
+                    <i class="c-fff fsize12 f-fA"> ￥{{video.price}}</i>
+                    </span>
                       <span class="fl jgAttr c-ccc f-fA">
-                        <i class="c-999 f-fA">34人学习</i>
-                        |
-                        <i class="c-999 f-fA">34评论</i>
-                      </span>
+                    <i class="c-999 f-fA">{{video.buyCount}} 人学习</i>
+                                            |
+                    <i class="c-999 f-fA">{{video.viewCount}} 人浏览</i>
+                    </span>
                     </section>
                   </div>
                 </li>
@@ -81,24 +81,24 @@
           <div>
             <article class="i-teacher-list">
               <ul class="of">
-                <li>
+                <li v-for="(producer,index) in producerList" v-bind:key="index">
                   <section class="i-teach-wrap">
                     <div class="i-teach-pic">
-                      <a href="/producer/1" title="周润发">
-                        <img alt="周润发" src="~/assets/photo/producer/1442298121626.jpg">
+                      <a :href='"/producer/"+producer.id' :title="producer.name">
+                        <img :alt="producer.name" :src="producer.avatar">
                       </a>
                     </div>
                     <div class="mt10 hLh30 txtOf tac">
-                      <a href="/teacher/1" title="周润发" class="fsize18 c-666">梁朝伟</a>
+                      <a :href='"/producer/"+producer.id' :title="producer.name" class="fsize18 c-666">{{producer.name}}</a>
                     </div>
                     <div class="hLh30 txtOf tac">
-                      <span class="fsize14 c-999">梁朝伟，华语电影圈著名演员，代表作品包括《春光乍泄》、《无间道》和《花样年华》等，曾多次获得电影界最高奖项肯定。</span>
+                      <span class="fsize14 c-999">{{producer.intro}}</span>
                     </div>
-                    <div class="mt15 i-q-txt">
-                      <p
-                        class="c-999 f-fA"
-                      >梁朝伟是华语电影圈备受尊敬和崇拜的演员之一，他以其细腻、深刻和精湛的表演技巧赢得了广泛的赞誉和认可。他不断尝试不同类型的角色和电影风格，始终保持着独特的风格和艺术追求，他的代表作品《春光乍泄》、《无间道》和《花样年华》等也成为了华语电影经典之作。他不仅在华语电影圈中广受欢迎，在国际电影节上也屡获殊荣，是一位备受推崇的演员和电影人。</p>
-                    </div>
+<!--                    <div class="mt15 i-q-txt">-->
+<!--                      <p-->
+<!--                        class="c-999 f-fA"-->
+<!--                      >{{teacher.career}}</p>-->
+<!--                    </div>-->
                   </section>
                 </li>
               </ul>
@@ -116,7 +116,8 @@
 </template>
 
 <script>
-2
+import bannerApi from "@/api/banner"
+import indexApi from "@/api/index"
 export default {
   data () {
     return {
@@ -129,8 +130,37 @@ export default {
         navigation: {
           nextEl: '.swiper-button-next',//下一页dom节点
           prevEl: '.swiper-button-prev'//前一页dom节点
-        }
-      }
+        },
+      },
+      //banners
+      bannerList:[],
+      //8个热门影视和4个随机创作者
+      videoList:[],
+      producerList:[]
+    }
+  },
+  created() {
+    this.getBannerList();
+    this.getVideoListAndProducerList()
+
+  },
+  methods:{
+    //获得所有轮播图
+    getBannerList(){
+      bannerApi.getBanners()
+        .then(response =>{
+          this.bannerList = response.data.data.list
+          // console.log( response.data.data.list)
+        })
+    },
+    //查询8格热门影视和4个创作者
+    getVideoListAndProducerList(){
+      indexApi.getIndexVideosAndProducers()
+        .then(response =>{
+          this.videoList = response.data.data.videos
+          this.producerList = response.data.data.producers
+          // console.log(response)
+        })
     }
   }
 }
