@@ -35,7 +35,7 @@ public class MsmServiceImpl implements MsmService {
         String keyid=
         String keysecret=
         String code = (String) param.get("code");
-//        System.out.println("拿到的code时"+code);
+        System.out.println("验证码"+code);
         StaticCredentialProvider provider = StaticCredentialProvider.create(Credential.builder()
                 .accessKeyId(keyid)
                 .accessKeySecret(keysecret)
