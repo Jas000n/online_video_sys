@@ -51,27 +51,31 @@ export default {
 
   data () {
     return {
+      //用于封装登录信息
       user:{
         mobile:'',
         password:''
       },
+      //获取用户信息
       loginInfo:{}
     }
   },
 
   methods: {
+    //登录
     submitLogin(){
       loginApi.submitLogin(this.user).then(response => {
         if(response.data.success){
-
           //把token存在cookie中、也可以放在localStorage中
-          cookie.set('guli_token', response.data.data.token, { domain: 'localhost' })
+          cookie.set('cili_token', response.data.data.token, { domain: 'localhost' })
           //登录成功根据token获取用户信息
-          loginApi.getLoginInfo().then(response => {
+          loginApi.getLoginInfo().then(result => {
 
-            this.loginInfo = response.data.data.item
+            this.loginInfo = result.data.data.userInfo
+
             //将用户信息记录cookie
-            cookie.set('guli_ucenter', this.loginInfo, { domain: 'localhost' })
+            cookie.set('cili_ucenter', JSON.stringify(this.loginInfo), { domain: 'localhost' })
+            // console.log(JSON.parse(cookie.get("cili_ucenter")))
             //跳转页面
             window.location.href = "/";
           })
