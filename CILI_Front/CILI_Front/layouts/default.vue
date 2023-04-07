@@ -5,7 +5,7 @@
       <section class="container">
         <h1 id="logo">
           <a href="#" title="cilicili">
-            <img src="~/assets/img/logo.png" width="100%" alt="cilicili">
+            <img src="@/assets/img/logo.png" width="100%" alt="cilicili">
           </a>
         </h1>
         <div class="h-r-nsl">
@@ -135,6 +135,7 @@ import "~/assets/css/theme.css";
 import "~/assets/css/global.css";
 import "~/assets/css/web.css";
 import cookie from "js-cookie";
+import loginApi from "@/api/login"
 
 export default {
   data(){
@@ -152,7 +153,16 @@ export default {
     }
   },
   created() {
-    this.getUserInfo();
+    //获取路径里的token, 在用户用微信登陆时调用这个方法
+    this.getTokenFromURL();
+    if(this.token){//看路径里是否有token
+      this.getWXUserInfo();
+
+    }else{
+      //右上角显示用户信息
+      this.getUserInfo();
+    }
+
   },
   methods:{
     //从cookie里取用户信息
@@ -170,6 +180,22 @@ export default {
       cookie.set('cili_token', "", { domain: 'localhost' })
       window.location.href = "/";
     },
+    //获取路径里的token, 在用户用微信登陆时调用这个方法
+    getTokenFromURL(){
+      this.token=this.$route.query.token
+    },
+    //根据获得的wx token来查数据库
+    getWXUserInfo(){
+      cookie.set("cili_token",this.token,{domain:'localhost'})
+      cookie.set("cili_ucenter","",{domain:'localhost'})
+
+      //调接口查用户
+      loginApi.getLoginInfo()
+        .then(response =>{
+          this.loginInfo = response.data.data.userInfo
+          cookie.set("cili_ucenter",this.loginInfo,{domain:'localhost'})
+        })
+    }
 
   }
 };
