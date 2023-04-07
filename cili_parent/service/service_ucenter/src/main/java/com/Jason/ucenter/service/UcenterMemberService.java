@@ -10,4 +10,6 @@ public interface UcenterMemberService extends IService<UcenterMember> {
     void register(RegisterVO registerVo);
     //登录
     String login(LoginVO loginVo);
+    //根据openid查数据库
+    UcenterMember getMemberByOpenId(String openid);
 }

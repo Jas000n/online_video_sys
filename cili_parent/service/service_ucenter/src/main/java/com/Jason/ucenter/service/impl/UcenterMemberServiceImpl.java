@@ -54,8 +54,16 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         return token;
 
     }
+    //根据openid查询用户
+    @Override
+    public UcenterMember getMemberByOpenId(String openid) {
+        QueryWrapper<UcenterMember> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("openid",openid);
+        UcenterMember ucenterMember = baseMapper.selectOne(queryWrapper);
+        return ucenterMember;
+    }
 
-        /**
+    /**
          * 会员注册
          * @param registerVo
          */
