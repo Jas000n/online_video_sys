@@ -8,4 +8,6 @@ public class EpisodeVO {
     private String id;
     //名称
     private String title;
+
+    private Integer isFree;
 }

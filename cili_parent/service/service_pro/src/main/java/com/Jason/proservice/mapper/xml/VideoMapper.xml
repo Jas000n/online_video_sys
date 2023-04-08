@@ -11,4 +11,15 @@
                         left outer join classification c2 on v.classification_id = c2.id
         where v.id =#{videoId}
     </select>
+    <!--根据影视id获取影视详细信息-->
+    <select id="getBaseVideoInfo" parameterType="String"  resultType="com.Jason.proservice.entity.vo.frontVO.videoWebVO">
+        select v.id, v.price, v.episode_num AS episodeNum , vd.description, p.name as producerName, c1.id AS classificationParentId ,
+               c2.id AS classificationId, v.cover, v.title, v.buy_count as buyCount, v.view_count as viewCount,
+               p.id as producerId, p.intro,p.avatar,c1.title as classificationParent, c2.title as classification
+        from video v    Left outer join video_description vd on v.id = vd.id
+                        left outer join producer p on v.producer_id = p.id
+                        left outer join classification c1 on v.classification_parent_id = c1.id
+                        left outer join classification c2 on v.classification_id = c2.id
+        where v.id =#{videoId}
+    </select>
 </mapper>

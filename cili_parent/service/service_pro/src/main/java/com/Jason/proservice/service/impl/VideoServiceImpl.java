@@ -1,19 +1,29 @@
 package com.Jason.proservice.service.impl;
 
+import com.Jason.proservice.entity.Producer;
 import com.Jason.proservice.entity.Video;
 import com.Jason.proservice.entity.VideoDescription;
 import com.Jason.proservice.entity.vo.VideoInfoVO;
 import com.Jason.proservice.entity.vo.VideoPublishVO;
+import com.Jason.proservice.entity.vo.frontVO.videoFrontVO;
+import com.Jason.proservice.entity.vo.frontVO.videoWebVO;
 import com.Jason.proservice.mapper.VideoMapper;
 import com.Jason.proservice.service.EpisodeService;
 import com.Jason.proservice.service.SeasonService;
 import com.Jason.proservice.service.VideoDescriptionService;
 import com.Jason.proservice.service.VideoService;
 import com.Jason.servicebase.exceptionhandler.CiliException;
+import com.alibaba.excel.util.StringUtils;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements VideoService {
@@ -110,5 +120,54 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
         if(result==0){
             throw new CiliException(20001,"删除视频失败!");
         }
+    }
+
+    //前台条件查询带分页查询影视
+    @Override
+    public Map<String, Object> getVideoFrontList(Page<Video> videoPage, videoFrontVO videoFrontVO) {
+        QueryWrapper<Video> queryWrapper = new QueryWrapper<>();
+        if(!StringUtils.isEmpty(videoFrontVO.getClassificationParentId())){
+            queryWrapper.eq("classification_parent_id",videoFrontVO.getClassificationParentId());
+        }
+        if(!StringUtils.isEmpty(videoFrontVO.getClassificationId())){
+            queryWrapper.eq("classification_id",videoFrontVO.getClassificationId());
+        }
+        if(!StringUtils.isEmpty(videoFrontVO.getBuyCountSort())){
+            queryWrapper.orderByDesc("buy_count");
+        }
+        if(!StringUtils.isEmpty(videoFrontVO.getPriceSort())){
+            queryWrapper.orderByDesc("price");
+        }
+        if(!StringUtils.isEmpty(videoFrontVO.getGmtCreateSort())){
+            queryWrapper.orderByDesc("gmt_create");
+        }
+
+
+        baseMapper.selectPage(videoPage,queryWrapper);
+
+        List<Video> records = videoPage.getRecords();
+        long current = videoPage.getCurrent();
+        long pages = videoPage.getPages();
+        long size = videoPage.getSize();
+        long total = videoPage.getTotal();
+        boolean hasNext = videoPage.hasNext();
+        boolean hasPrevious =videoPage.hasPrevious();
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("items", records);
+        map.put("current", current);
+        map.put("pages", pages);
+        map.put("size", size);
+        map.put("total", total);
+        map.put("hasNext", hasNext);
+        map.put("hasPrevious", hasPrevious);
+
+        return map;
+    }
+
+    //根据id查询详细信息
+    @Override
+    public videoWebVO getBaseInfo(String videoId) {
+        return baseMapper.getBaseVideoInfo(videoId);
     }
 }
