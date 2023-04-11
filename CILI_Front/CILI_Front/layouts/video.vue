@@ -1,7 +1,7 @@
 <template>
   <div class="guli-player">
     <div class="head">
-      <a href="#" title="谷粒学院">
+      <a href="#" title="CiliCili">
         <img class="logo" src="@/assets/img/logo.png" lt="CiliCili">
       </a></div>
     <div class="body">
@@ -9,10 +9,10 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {}
 </script>
+
 <style>
 html,body{
   height:100%;
@@ -27,10 +27,12 @@ html,body{
   left: 0;
   width: 100%;
 }
+
 .head .logo{
   height: 50px;
   margin-left: 10px;
 }
+
 .body {
   position: absolute;
   top: 50px;

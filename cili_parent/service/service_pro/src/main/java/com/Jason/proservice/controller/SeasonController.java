@@ -31,7 +31,7 @@ public class SeasonController {
         seasonService.save(season);
         return R.ok();
     }
-    //根据查询章节
+    //根据id查询章节
      @GetMapping("/getSeasonInfoById/{seasonId}")
      public R getSeasonInfoBYId(@PathVariable String seasonId){
          Season season = seasonService.getById(seasonId);

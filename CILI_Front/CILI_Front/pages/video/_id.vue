@@ -122,7 +122,9 @@
                             </a>
                             <ol class="lh-menu-ol" style="display: block;">
                               <li v-for="episode in season.children" :key="episode.id" class="lh-menu-second ml30">
-                                <a href="#" title>
+                                <a :href="'/aliPlayer/'+episode.videoSourceId"
+                                   :title="episode.title"
+                                   target="_blank">>
                                   <span v-if="episode.isFree === 1" class="fr">
                                         <i class="free-icon vam mr10">免费试看</i>
                                     </span>
@@ -180,12 +182,15 @@ import videoAPi from "@/api/video.js"
 export default {
   asyncData({ params, error }) {
     return videoAPi.getVideoInfo(params.id).then(response => {
-      console.log(response);
+      console.log(response.data.data.seasons[0].children);
       return {
         video: response.data.data.videoWebVO,
         seasonList: response.data.data.seasons
       }
     })
+  },
+  methods:{
+
   }
 }
 </script>

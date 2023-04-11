@@ -10,4 +10,6 @@ public class EpisodeVO {
     private String title;
 
     private Integer isFree;
+
+    private String videoSourceId;
 }
