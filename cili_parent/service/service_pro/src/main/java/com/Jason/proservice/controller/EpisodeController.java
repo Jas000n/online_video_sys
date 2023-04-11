@@ -6,6 +6,7 @@ import com.Jason.proservice.entity.Episode;
 import com.Jason.proservice.service.EpisodeService;
 import com.Jason.servicebase.exceptionhandler.CiliException;
 import com.alibaba.excel.util.StringUtils;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.apache.poi.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -59,6 +60,13 @@ public class EpisodeController {
     public R updateEpisode(@RequestBody Episode episode){
         episodeService.updateById(episode);
         return R.ok();
+    }
+    //根据episode id找到video source id
+    @GetMapping("getVSID/{episodeID}")
+    public R getVSID(@PathVariable String episodeID){
+        Episode episode = episodeService.getById(episodeID);
+        String videoSourceID = episode.getVideoSourceId();
+        return R.ok().data("videoSourceID",videoSourceID);
     }
 
 }

@@ -9,5 +9,12 @@ export default {
       method: 'get'
 
     })
+  },
+  getVideoSourceID(episodeID){
+    return request({
+      url: `/service/episode/getVSID/${episodeID}`,
+      method: 'get'
+
+    })
   }
 }

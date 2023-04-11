@@ -122,7 +122,7 @@
                             </a>
                             <ol class="lh-menu-ol" style="display: block;">
                               <li v-for="episode in season.children" :key="episode.id" class="lh-menu-second ml30">
-                                <a :href="'/aliPlayer/'+episode.videoSourceId"
+                                <a :href="'/aliPlayer/'+episode.id"
                                    :title="episode.title"
                                    target="_blank">>
                                   <span v-if="episode.isFree === 1" class="fr">

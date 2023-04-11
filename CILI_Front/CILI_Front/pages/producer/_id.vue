@@ -8,7 +8,7 @@
         </h2>
       </header>
       <div class="t-infor-wrap">
-        <!-- 讲师基本信息 -->
+        <!-- 创作者基本信息 -->
         <section class="fl t-infor-box c-desc-content">
           <div class="mt20 ml20">
             <section class="t-infor-pic">

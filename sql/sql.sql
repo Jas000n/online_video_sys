@@ -8,10 +8,51 @@ create table classification
     gmt_create   datetime                 not null comment '创建时间',
     gmt_modified datetime                 not null comment '更新时间'
 )
-    comment '影视类别';
+    comment '影视类别' row_format = COMPACT;
 
 create index idx_parent_id
     on classification (parent_id);
+
+create table comment
+(
+    id           char(19)                     not null comment 'ID'
+        primary key,
+    episode_id   varchar(19)      default ''  not null comment '影视id',
+    producer_id  char(19)         default ''  not null comment '创作者id',
+    member_id    varchar(19)      default ''  not null comment '会员id',
+    nickname     varchar(50)                  null comment '会员昵称',
+    avatar       varchar(255)                 null comment '会员头像',
+    content      varchar(500)                 null comment '评论内容',
+    is_deleted   tinyint unsigned default '0' not null comment '逻辑删除 1（true）已删除， 0（false）未删除',
+    gmt_create   datetime                     not null comment '创建时间',
+    gmt_modified datetime                     not null comment '更新时间'
+)
+    comment '评论';
+
+create index idx_member_id
+    on comment (member_id);
+
+create index idx_producer_id
+    on comment (producer_id);
+
+create index idx_video_id
+    on comment (episode_id);
+
+create table crm_banner
+(
+    id           char(19)         default ''  not null comment 'ID'
+        primary key,
+    title        varchar(20)      default ''  null comment '标题',
+    image_url    varchar(500)     default ''  not null comment '图片地址',
+    link_url     varchar(500)     default ''  null comment '链接地址',
+    sort         int unsigned     default '0' not null comment '排序',
+    is_deleted   tinyint unsigned default '0' not null comment '逻辑删除 1（true）已删除， 0（false）未删除',
+    gmt_create   datetime                     not null comment '创建时间',
+    gmt_modified datetime                     not null comment '更新时间',
+    constraint uk_name
+        unique (title)
+)
+    comment '首页banner表';
 
 create table episode
 (
@@ -32,7 +73,7 @@ create table episode
     gmt_create          datetime                         not null comment '创建时间',
     gmt_modified        datetime                         not null comment '更新时间'
 )
-    comment '每一集视频';
+    comment '每一集视频' row_format = COMPACT;
 
 create index idx_season_id
     on episode (season_id);
@@ -64,10 +105,29 @@ create table season
     gmt_create   datetime                 not null comment '创建时间',
     gmt_modified datetime                 not null comment '更新时间'
 )
-    comment '季';
+    comment '季' row_format = COMPACT;
 
 create index idx_video_id
     on season (video_id);
+
+create table ucenter_member
+(
+    id           char(19)               not null comment '会员id'
+        primary key,
+    openid       varchar(128)           null comment '微信openid',
+    mobile       varchar(11) default '' null comment '手机号',
+    password     varchar(255)           null comment '密码',
+    nickname     varchar(50)            null comment '昵称',
+    sex          tinyint unsigned       null comment '性别 1 女，2 男',
+    age          tinyint unsigned       null comment '年龄',
+    avatar       varchar(255)           null comment '用户头像',
+    sign         varchar(100)           null comment '用户签名',
+    is_disabled  tinyint(1)  default 0  not null comment '是否禁用 1（true）已禁用，  0（false）未禁用',
+    is_deleted   tinyint(1)  default 0  not null comment '逻辑删除 1（true）已删除， 0（false）未删除',
+    gmt_create   datetime               not null comment '创建时间',
+    gmt_modified datetime               not null comment '更新时间'
+)
+    comment '用户表';
 
 create table video
 (
@@ -88,7 +148,7 @@ create table video
     gmt_create               datetime                                not null comment '创建时间',
     gmt_modified             datetime                                not null comment '更新时间'
 )
-    comment '影视';
+    comment '影视' row_format = COMPACT;
 
 create index idx_classification_id
     on video (classification_id);

@@ -2,10 +2,12 @@ package com.Jason.ucenter.controller;
 
 import com.Jason.common.utils.JwtUtils;
 import com.Jason.common.utils.R;
+import com.Jason.common.utils.vo.UCENTERMEMBER;
 import com.Jason.ucenter.entity.UcenterMember;
 import com.Jason.ucenter.entity.vo.LoginVO;
 import com.Jason.ucenter.entity.vo.RegisterVO;
 import com.Jason.ucenter.service.UcenterMemberService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,5 +42,14 @@ public class UcenterMemberController {
         UcenterMember member = memberService.getById(memberId);
 
         return R.ok().data("userInfo",member);
+    }
+
+    //根据memberID得到member info
+    @GetMapping("getById/{id}")
+    public UCENTERMEMBER getById(@PathVariable String id){
+        UcenterMember member = memberService.getById(id);
+        UCENTERMEMBER U = new UCENTERMEMBER();
+        BeanUtils.copyProperties(member,U);
+        return U;
     }
 }
