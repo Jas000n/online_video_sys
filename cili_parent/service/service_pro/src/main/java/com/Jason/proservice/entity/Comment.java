@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
@@ -22,8 +21,8 @@ public class Comment implements Serializable {
     //影视id
     private String episodeId;
 
-    //创作者id
-    private String producerId;
+//    //创作者id
+//    private String producerId;
 
     //会员id
     private String memberId;

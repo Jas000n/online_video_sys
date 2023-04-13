@@ -18,7 +18,6 @@ create table comment
     id           char(19)                     not null comment 'ID'
         primary key,
     episode_id   varchar(19)      default ''  not null comment '影视id',
-    producer_id  char(19)         default ''  not null comment '创作者id',
     member_id    varchar(19)      default ''  not null comment '会员id',
     nickname     varchar(50)                  null comment '会员昵称',
     avatar       varchar(255)                 null comment '会员头像',
@@ -32,11 +31,9 @@ create table comment
 create index idx_member_id
     on comment (member_id);
 
-create index idx_producer_id
-    on comment (producer_id);
-
 create index idx_video_id
     on comment (episode_id);
+
 
 create table crm_banner
 (

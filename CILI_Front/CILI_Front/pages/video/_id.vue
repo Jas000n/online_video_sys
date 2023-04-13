@@ -182,7 +182,7 @@ import videoAPi from "@/api/video.js"
 export default {
   asyncData({ params, error }) {
     return videoAPi.getVideoInfo(params.id).then(response => {
-      console.log(response.data.data.seasons[0].children);
+      // console.log(response.data.data.seasons[0].children);
       return {
         video: response.data.data.videoWebVO,
         seasonList: response.data.data.seasons

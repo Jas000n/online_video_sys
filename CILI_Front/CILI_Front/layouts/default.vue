@@ -193,7 +193,7 @@ export default {
       loginApi.getLoginInfo()
         .then(response =>{
           this.loginInfo = response.data.data.userInfo
-          cookie.set("cili_ucenter",this.loginInfo,{domain:'localhost'})
+          cookie.set("cili_ucenter",JSON.stringify(this.loginInfo),{domain:'localhost'})
         })
     }
 

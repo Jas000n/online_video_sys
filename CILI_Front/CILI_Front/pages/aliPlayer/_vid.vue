@@ -155,7 +155,7 @@ export default {
 
   created() {
     this.vid = this.$route.params.vid
-    this.initComment(this.vid,this.page,this.limit)
+    this.initComment()
 
   },
   mounted() {
@@ -193,12 +193,22 @@ export default {
 
         })
     },
-    initComment(a,b,c){
-      commentApi.getPageList(a,b,c).then(response => {
+    initComment(){
+      commentApi.getPageList(this.vid,this.page,this.limit).then(response => {
         console.log(response)
         this.data = response.data.data
       })
-    }
+    },
+    addComment(){
+      this.comment.episodeId = this.vid
+      // this.comment.producerId =
+      commentApi.addComment(this.comment).then(response => {
+        if(response.data.success){
+          this.comment.content = ''
+          this.initComment()
+        }
+      })
+    },
   },
   data(){
     return{

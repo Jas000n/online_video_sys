@@ -6,6 +6,7 @@ import com.Jason.common.utils.vo.UCENTERMEMBER;
 import com.Jason.proservice.client.UcenterMemberClient;
 import com.Jason.proservice.entity.Comment;
 import com.Jason.proservice.service.CommentService;
+import com.Jason.proservice.service.ProducerService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,6 +6,7 @@
       </a></div>
     <div class="body">
       <div class="content"><nuxt/></div>
+      <div>123</div>
     </div>
   </div>
 </template>
