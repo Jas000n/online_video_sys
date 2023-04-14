@@ -1,13 +1,16 @@
 package com.Jason.proservice.controller;
 
 import com.Jason.common.utils.R;
+import com.Jason.common.utils.vo.videoInfoVO;
 import com.Jason.proservice.entity.Video;
 import com.Jason.proservice.entity.vo.VideoInfoVO;
 import com.Jason.proservice.entity.vo.VideoPublishVO;
 import com.Jason.proservice.entity.vo.VideoQuery;
+import com.Jason.proservice.entity.vo.frontVO.videoWebVO;
 import com.Jason.proservice.service.VideoService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -113,6 +116,16 @@ public class VideoController {
     public R deleteByID(@PathVariable String id){
         videoService.removeVideoById(id);
         return R.ok();
+    }
+
+    //根据id查询影视信息,返回一个common utils里的对象,供order service远程调用
+    @GetMapping("getVideoInfoForOrder/{vid}")
+    public videoInfoVO getVideoInfoForOrder(@PathVariable String vid){
+        System.out.println("调用了1111");
+        videoWebVO videoWebVO = videoService.getBaseInfo(vid);
+        videoInfoVO videoInfoVO = new videoInfoVO();
+        BeanUtils.copyProperties(videoWebVO,videoInfoVO);
+        return videoInfoVO;
     }
 
 }

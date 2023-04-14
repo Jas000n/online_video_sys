@@ -43,7 +43,7 @@
                 </span>
             </section>
             <section class="c-attr-mt">
-              <a href="#" title="立即观看" class="comm-btn c-btn-3">立即观看</a>
+              <a href="#" title="立即购买" class="comm-btn c-btn-3" @click="createOrder()">立即购买</a>
             </section>
           </section>
         </aside>
@@ -179,17 +179,29 @@
 </template>
 <script>
 import videoAPi from "@/api/video.js"
+import orderApi from "@/api/order.js"
 export default {
   asyncData({ params, error }) {
     return videoAPi.getVideoInfo(params.id).then(response => {
       // console.log(response.data.data.seasons[0].children);
       return {
+        videoId:params.id,
         video: response.data.data.videoWebVO,
         seasonList: response.data.data.seasons
       }
     })
   },
   methods:{
+    //根据课程id，调用接口方法生成订单
+
+    createOrder(){
+      orderApi.createOrder(this.videoId).then(response => {
+        if(response.data.success){
+          //订单创建成功，跳转到订单页面
+          this.$router.push({ path: '/order/'+ response.data.data.orderId })
+        }
+      })
+    },
 
   }
 }
