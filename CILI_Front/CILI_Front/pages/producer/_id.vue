@@ -50,11 +50,11 @@
                   <section class="course-img">
                     <img :src="video.cover" class="img-responsive" >
                     <div class="cc-mask">
-                      <a href="#" title="开始观看" target="_blank" class="comm-btn c-btn-1">开始观看</a>
+                      <a title="开始观看" target="_blank" class="comm-btn c-btn-1" @click="jump(video.id)">开始观看</a>
                     </div>
                   </section>
                   <h3 class="hLh30 txtOf mt10">
-                    <a href="#" :title="video.title" target="_blank" class="course-title fsize18 c-333">{{ video.title }}</a>
+                    <a  @click="jump(video.id)" :title="video.title" target="_blank" class="course-title fsize18 c-333">{{ video.title }}</a>
                   </h3>
                 </div>
               </li>
@@ -85,6 +85,11 @@ export default {
         }
       })
 
+  },
+  methods:{
+    jump(id){
+    this.$router.push("/video/"+id)
+    }
   }
 };
 

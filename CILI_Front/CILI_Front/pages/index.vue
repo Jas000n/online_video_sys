@@ -64,7 +64,7 @@
               <div class="clear"></div>
             </article>
             <section class="tac pt20">
-              <a href="#" title="全部影视" class="comm-btn c-btn-2">全部影视</a>
+              <a href="/video" title="全部影视" class="comm-btn c-btn-2">全部影视</a>
             </section>
           </div>
         </section>
@@ -105,7 +105,7 @@
               <div class="clear"></div>
             </article>
             <section class="tac pt20">
-              <a href="#" title="全部创作者" class="comm-btn c-btn-2">全部创作者</a>
+              <a href="/producer" title="全部创作者" class="comm-btn c-btn-2">全部创作者</a>
             </section>
           </div>
         </section>

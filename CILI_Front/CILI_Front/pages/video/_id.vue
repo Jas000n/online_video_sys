@@ -42,7 +42,10 @@
                     <a class="c-fff vam" title="收藏" href="#" >收藏</a>
                 </span>
             </section>
-            <section class="c-attr-mt">
+            <section v-if="isBuy || Number(video.price)===0" class="c-attr-mt">
+              <a href="#" title="立即观看" class="comm-btn c-btn-3" >立即观看</a>
+            </section>
+            <section v-else class="c-attr-mt">
               <a href="#" title="立即购买" class="comm-btn c-btn-3" @click="createOrder()">立即购买</a>
             </section>
           </section>
@@ -181,21 +184,33 @@
 import videoAPi from "@/api/video.js"
 import orderApi from "@/api/order.js"
 export default {
-  asyncData({ params, error }) {
-    return videoAPi.getVideoInfo(params.id).then(response => {
-      // console.log(response.data.data.seasons[0].children);
-      return {
-        videoId:params.id,
-        video: response.data.data.videoWebVO,
-        seasonList: response.data.data.seasons
-      }
-    })
+  // asyncData({ params, error }) {
+  //   return videoAPi.getVideoInfo(params.id).then(response => {
+  //     return {
+  //       videoId:params.id,
+  //       video: response.data.data.videoWebVO,
+  //       seasonList: response.data.data.seasons,
+  //     }
+  //   })
+  // },
+  data(){
+    return{
+      videoId:"",
+      video:{},
+      seasonList:{},
+      isBuy:false,
+    }
+  },
+  created() {
+    this.videoId = this.$route.params.id;
   },
   methods:{
     //根据课程id，调用接口方法生成订单
 
     createOrder(){
-      orderApi.createOrder(this.videoId).then(response => {
+      orderApi.createOrder(this.videoId).
+      then(response => {
+        console.log(this.videoId)
         if(response.data.success){
           //订单创建成功，跳转到订单页面
           this.$router.push({ path: '/order/'+ response.data.data.orderId })
@@ -203,6 +218,22 @@ export default {
       })
     },
 
+    //初始化课程数据
+    initVideo(){
+      videoAPi.getVideoInfo(this.videoId)
+        .then(response =>{
+          console.log(response.data.data)
+          let result_data = response.data.data
+          this.isBuy = result_data.isbuy
+          this.seasonList = result_data.seasons
+          this.video = result_data.videoWebVO
+        })
+
+    }
+
+  },
+  mounted() {
+    this.initVideo()
   }
 }
 </script>

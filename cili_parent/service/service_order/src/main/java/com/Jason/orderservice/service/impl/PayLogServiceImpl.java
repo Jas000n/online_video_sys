@@ -87,7 +87,7 @@ public class PayLogServiceImpl extends ServiceImpl<PayLogMapper, PayLog> impleme
         payLog.setPayTime(new Date());
         payLog.setPayType(1);//支付类型
         payLog.setTotalFee(oorder.getTotalFee());//总金额(分)
-        payLog.setTradeState(Integer.valueOf(map.get("trade_state")));//支付状态
+        payLog.setTradeState(map.get("trade_state"));//支付状态
         payLog.setTransactionId(map.get("transaction_id"));
         payLog.setAttr(JSONObject.toJSONString(map));
         baseMapper.insert(payLog);//插入到支付日志表

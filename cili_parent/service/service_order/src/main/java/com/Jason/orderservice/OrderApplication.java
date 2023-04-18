@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 @MapperScan("com.Jason.orderservice.mapper")
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = {"com.Jason.orderservice.client"})
+@EnableFeignClients
 public class OrderApplication {
     public static void main(String[] args) {
         SpringApplication.run(OrderApplication.class,args);

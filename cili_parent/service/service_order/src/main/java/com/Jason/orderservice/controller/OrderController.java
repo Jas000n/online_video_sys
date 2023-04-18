@@ -39,4 +39,22 @@ public class OrderController {
         Oorder one = orderService.getOne(queryWrapper);
         return R.ok().data("item",one);
     }
+
+    //是否购买影视
+    @GetMapping("isBuyVideo/{memberId}/{id}")
+    public boolean isBuyVideo(@PathVariable String memberId,
+                               @PathVariable String id) {
+        //订单状态是1表示支付成功
+        System.out.println("执行");
+        if (memberId == null){
+            System.out.println("没有登录,直接返回");
+            return false;
+        }
+        int count = orderService.count(new QueryWrapper<Oorder>().eq("member_id", memberId).eq("video_id", id).eq("status", 1));
+        if(count>0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

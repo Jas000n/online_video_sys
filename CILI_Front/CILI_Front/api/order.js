@@ -29,5 +29,12 @@ export default {
       url: '/order/log/queryPayStatus/'+cid,
       method: 'get'
     })
-  }
+  },
+  //获取isbuy, 传入video id和member id
+  isbuy(vid, memberId){
+    return request({
+      url: `/order/order/isbuy/${vid}/${memberId}`,
+      method: 'get'
+    })
+  },
 }

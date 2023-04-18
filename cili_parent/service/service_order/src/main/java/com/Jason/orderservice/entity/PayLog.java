@@ -30,7 +30,7 @@ public class PayLog implements Serializable {
 
     private Integer payType;
 
-    private Integer tradeState;
+    private String tradeState;
 
     private String attr;
 

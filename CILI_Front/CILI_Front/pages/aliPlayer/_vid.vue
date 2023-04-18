@@ -223,7 +223,6 @@ export default {
         content:'',
         episodeId:''
       },
-      isbuyCourse:false
     }
   }
 };

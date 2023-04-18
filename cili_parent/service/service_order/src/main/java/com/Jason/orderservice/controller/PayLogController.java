@@ -33,6 +33,9 @@ public class PayLogController {
         if (map == null) {//出错
             return R.error().message("支付出错");
         }
+        System.out.println("trade state!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
+        System.out.println(map.get("trade_state"));
+        System.out.println("end trade state!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
         if (map.get("trade_state").equals("SUCCESS")) {//如果成功
             //更改订单状态
             payService.updateOrderStatus(map);

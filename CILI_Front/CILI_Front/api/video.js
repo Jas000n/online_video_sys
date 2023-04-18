@@ -15,12 +15,23 @@ export default {
       method: 'get'
     })
   },
-  //获取影视详情页需要的数据
+  // //获取影视详情页需要的数据
+  // getVideoInfo(id){
+  //   return request({
+  //     url: `/service/videoFront/getFrontVideoInfo/${id}`,
+  //     method: 'get'
+  //   })
+  // },
+  //获取影视详情页需要的数据,包含有没有购买的信息
   getVideoInfo(id){
     return request({
-      url: `/service/videoFront/getFrontVideoInfo/${id}`,
-      method: 'get'
+      url: `/service/videoFront/getVideoInfo/${id}`,
+      method: 'get',
+      headers:{
+        'token':localStorage.getItem("cili_token")
+      }
     })
-  }
+  },
+
 
 }
