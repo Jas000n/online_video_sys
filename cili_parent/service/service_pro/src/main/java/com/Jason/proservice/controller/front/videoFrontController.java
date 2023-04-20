@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @RestController
-@CrossOrigin
+//@CrossOrigin
 @RequestMapping("service/videoFront")
 public class videoFrontController {
     @Autowired

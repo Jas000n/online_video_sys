@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/service/user")
-@CrossOrigin
+//@CrossOrigin
 public class LoginController {
 
     //login

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/service/episode")
-@CrossOrigin
+//@CrossOrigin
 public class EpisodeController {
 
     @Autowired

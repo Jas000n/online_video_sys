@@ -23,8 +23,8 @@ import java.util.List;
  * @since 2023-02-28
  */
 @RestController
-@CrossOrigin
-@RequestMapping("/proservice/producer")
+//@CrossOrigin
+@RequestMapping("/service/producer")
 public class ProducerController {
 
 

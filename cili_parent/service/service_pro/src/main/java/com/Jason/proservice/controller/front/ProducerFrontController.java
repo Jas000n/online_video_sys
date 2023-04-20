@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin
+//@CrossOrigin
 @RequestMapping("service/producerFront")
 public class ProducerFrontController {
     @Autowired

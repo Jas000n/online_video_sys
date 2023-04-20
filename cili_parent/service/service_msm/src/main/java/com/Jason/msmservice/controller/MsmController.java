@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/msm")
-@CrossOrigin
+//@CrossOrigin
 public class MsmController{
     @Autowired
     private MsmService msmService;

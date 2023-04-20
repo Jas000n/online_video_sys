@@ -16,7 +16,7 @@ export default {
   getListProducer(){
     return request(
       {
-        url: '/proservice/producer/findAll',
+        url: '/service/producer/findAll',
         method: 'get'
       }
     )

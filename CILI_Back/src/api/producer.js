@@ -8,7 +8,7 @@ export default{
     getProducerListPage(current,limit,producerQuery) {
       // console.log(current,"current123")
         return request({
-      url: `/proservice/producer/pageProducerCondition/${current}/${limit}`,
+      url: `/service/producer/pageProducerCondition/${current}/${limit}`,
       method: 'post',
       //data表示把对象转化为json传递到接口里
       data: producerQuery
@@ -17,7 +17,7 @@ export default{
   //删除创作者
   removeProducerByID(id){
     return request({
-      url:`/proservice/producer/delete/${id}`,
+      url:`/service/producer/delete/${id}`,
       method:"delete"
     }
 

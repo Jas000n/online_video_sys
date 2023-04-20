@@ -30,7 +30,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/vod/video")
-@CrossOrigin
+//@CrossOrigin
 public class VodController {
 
     @Autowired

@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/service/classification")
-@CrossOrigin
+//@CrossOrigin
 public class ClassificationController {
 
     @Autowired

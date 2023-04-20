@@ -18,7 +18,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("statistic")
-@CrossOrigin
+//@CrossOrigin
 public class StatisticController {
 
     @Autowired

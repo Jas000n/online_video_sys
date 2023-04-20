@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cms/adminBannner")
-@CrossOrigin
+//@CrossOrigin
 //供后台管理员调用进行管理的接口
 public class BannerAdminController {
     @Autowired

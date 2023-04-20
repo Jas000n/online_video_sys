@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/service/video")
-@CrossOrigin
+//@CrossOrigin
 public class VideoController {
 
     @Autowired

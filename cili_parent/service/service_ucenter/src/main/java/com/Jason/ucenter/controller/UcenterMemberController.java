@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/ucenter")
-@CrossOrigin
+//@CrossOrigin
 public class UcenterMemberController {
     @Autowired
     private StatisticClient statisticClient;

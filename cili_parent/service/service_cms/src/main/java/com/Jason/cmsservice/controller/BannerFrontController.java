@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cms/frontBannner")
-@CrossOrigin
+//@CrossOrigin
 //供前台用户调用,查看banner的接口
 public class BannerFrontController {
     @Autowired
