@@ -3,6 +3,7 @@ package com.Jason.ucenter.controller;
 import com.Jason.common.utils.JwtUtils;
 import com.Jason.common.utils.R;
 import com.Jason.common.utils.vo.UCENTERMEMBER;
+import com.Jason.ucenter.client.StatisticClient;
 import com.Jason.ucenter.entity.UcenterMember;
 import com.Jason.ucenter.entity.vo.LoginVO;
 import com.Jason.ucenter.entity.vo.RegisterVO;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/ucenter")
 @CrossOrigin
 public class UcenterMemberController {
+    @Autowired
+    private StatisticClient statisticClient;
 
     @Autowired
     private UcenterMemberService memberService;
@@ -24,12 +27,14 @@ public class UcenterMemberController {
     @PostMapping("login")
     public R login(@RequestBody LoginVO loginVo) {
         String token = memberService.login(loginVo);
+        statisticClient.addCountLogin();
         return R.ok().data("token", token);
     }
     //注册
     @PostMapping("register")
     public R register(@RequestBody RegisterVO registerVo){
         memberService.register(registerVo);
+        statisticClient.addCountRegister();
         return R.ok();
     }
 

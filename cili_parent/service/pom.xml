@@ -20,6 +20,7 @@
         <module>service_msm</module>
         <module>service_ucenter</module>
         <module>service_order</module>
+        <module>service_statistic</module>
     </modules>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

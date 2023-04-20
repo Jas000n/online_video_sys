@@ -2,6 +2,7 @@ package com.Jason.ucenter.controller;
 
 import com.Jason.common.utils.JwtUtils;
 import com.Jason.servicebase.exceptionhandler.CiliException;
+import com.Jason.ucenter.client.StatisticClient;
 import com.Jason.ucenter.entity.UcenterMember;
 import com.Jason.ucenter.service.UcenterMemberService;
 import com.Jason.ucenter.utils.ConstWXUtils;
@@ -24,6 +25,8 @@ import java.util.HashMap;
 public class WXApiController {
     @Autowired
     private UcenterMemberService ucenterMemberService;
+    @Autowired
+    private StatisticClient statisticClient;
     @GetMapping("login")
     public String genQrConnect(HttpSession session) {
         // 微信开放平台授权baseUrl
@@ -105,13 +108,14 @@ public class WXApiController {
             ucenterMember.setNickname(nickname);
             ucenterMember.setAvatar(headimgurl);
             ucenterMemberService.save(ucenterMember);
+            statisticClient.addCountRegister();
         }
 
         //使用jwt根据用户生成token,写进请求地址
         String jwtToken = JwtUtils.getJwtToken(ucenterMember.getId(), ucenterMember.getNickname());
 
 
-
+        statisticClient.addCountLogin();
         return "redirect:http://localhost:3000?token="+jwtToken;
     }
 }

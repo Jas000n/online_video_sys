@@ -1,6 +1,7 @@
 package com.Jason.vod.controller;
 
 import com.Jason.common.utils.R;
+import com.Jason.vod.client.StatisticClient;
 import com.Jason.vod.service.VodService;
 import com.Jason.vod.utils.ConstVodUtils;
 import com.Jason.vod.utils.initVodObject;
@@ -34,10 +35,14 @@ public class VodController {
 
     @Autowired
     private VodService vodService;
+    @Autowired
+    private StatisticClient statisticClient;
     //上传视频到阿里云
     @PostMapping("uploadAliYunVideo")
     public R uploadAliYunVideo(MultipartFile file) throws IOException {
         String videoId = vodService.uploadAliYunVideo(file);
+        statisticClient.addCountVideo();
+
         return R.ok().data("videoId",videoId);
     }
 
@@ -114,6 +119,7 @@ public class VodController {
 
         // Finally, close the client
         client.close();
+        statisticClient.addCountView();
         return R.ok().message("获取地址成功").data("URL",Url);
     }
 

@@ -49,24 +49,28 @@
         label="名称"
         width="180"/>
       <el-table-column
-        prop="intro"
-        label="个人资料"
-        width="180"/>
+        prop="cover"
+        label="影视封面"
+        width="180">
+        <template   slot-scope="scope">
+          <img :src="scope.row.cover"  min-width="70" height="70" />
+        </template>
+      </el-table-column>
       <el-table-column
         prop="gmtCreate"
-        label="注册时间"
+        label="创建时间"
         sortable
         width="180"/>
       <el-table-column label="操作">
         <template slot-scope="scope">
 
-          <router-link :to="'/video/info'">
+          <router-link :to="'/video/info/'+scope.row.id">
             <el-button
               size="mini"
             >编辑影视基本信息
             </el-button>
           </router-link>
-          <router-link :to="'/video/info'">
+          <router-link :to="'/video/season/'+scope.row.id">
             <el-button
               size="mini"
             >编辑影视大纲信息
