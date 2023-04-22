@@ -1,3 +1,90 @@
+create table acl_permission
+(
+    id               char(19)         default ''  not null comment '编号'
+        primary key,
+    pid              char(19)         default ''  not null comment '所属上级',
+    name             varchar(20)      default ''  not null comment '名称',
+    type             tinyint          default 0   not null comment '类型(1:菜单,2:按钮)',
+    permission_value varchar(50)                  null comment '权限值',
+    path             varchar(100)                 null comment '访问路径',
+    component        varchar(100)                 null comment '组件路径',
+    icon             varchar(50)                  null comment '图标',
+    status           tinyint                      null comment '状态(0:禁止,1:正常)',
+    is_deleted       tinyint unsigned default '0' not null comment '逻辑删除 1（true）已删除， 0（false）未删除',
+    gmt_create       datetime                     not null comment '创建时间',
+    gmt_modified     datetime                     not null comment '更新时间'
+)
+    comment '权限';
+
+create index idx_pid
+    on acl_permission (pid);
+
+create table acl_role
+(
+    id           char(19)         default ''  not null comment '角色id'
+        primary key,
+    role_name    varchar(20)      default ''  not null comment '角色名称',
+    role_code    varchar(20)                  null comment '角色编码',
+    remark       varchar(255)                 null comment '备注',
+    is_deleted   tinyint unsigned default '0' not null comment '逻辑删除 1（true）已删除， 0（false）未删除',
+    gmt_create   datetime                     not null comment '创建时间',
+    gmt_modified datetime                     not null comment '更新时间'
+)
+    charset = utf8mb3;
+
+create table acl_role_permission
+(
+    id            char(19)         default ''  not null
+        primary key,
+    role_id       char(19)         default ''  not null,
+    permission_id char(19)         default ''  not null,
+    is_deleted    tinyint unsigned default '0' not null comment '逻辑删除 1（true）已删除， 0（false）未删除',
+    gmt_create    datetime                     not null comment '创建时间',
+    gmt_modified  datetime                     not null comment '更新时间'
+)
+    comment '角色权限' charset = utf8mb3;
+
+create index idx_permission_id
+    on acl_role_permission (permission_id);
+
+create index idx_role_id
+    on acl_role_permission (role_id);
+
+create table acl_user
+(
+    id           char(19)                     not null comment '会员id'
+        primary key,
+    username     varchar(20)      default ''  not null comment '微信openid',
+    password     varchar(32)      default ''  not null comment '密码',
+    nick_name    varchar(50)                  null comment '昵称',
+    salt         varchar(255)                 null comment '用户头像',
+    token        varchar(100)                 null comment '用户签名',
+    is_deleted   tinyint unsigned default '0' not null comment '逻辑删除 1（true）已删除， 0（false）未删除',
+    gmt_create   datetime                     not null comment '创建时间',
+    gmt_modified datetime                     not null comment '更新时间',
+    constraint uk_username
+        unique (username)
+)
+    comment '用户表';
+
+create table acl_user_role
+(
+    id           char(19)         default ''  not null comment '主键id'
+        primary key,
+    role_id      char(19)         default '0' not null comment '角色id',
+    user_id      char(19)         default '0' not null comment '用户id',
+    is_deleted   tinyint unsigned default '0' not null comment '逻辑删除 1（true）已删除， 0（false）未删除',
+    gmt_create   datetime                     not null comment '创建时间',
+    gmt_modified datetime                     not null comment '更新时间'
+)
+    charset = utf8mb3;
+
+create index idx_role_id
+    on acl_user_role (role_id);
+
+create index idx_user_id
+    on acl_user_role (user_id);
+
 create table classification
 (
     id           char(19)                 not null comment '类别ID'

@@ -1,0 +1,2 @@
+INSERT INTO cilicili.acl_user (id, username, password, nick_name, salt, token, is_deleted, gmt_create, gmt_modified) VALUES ('1', 'admin', '96e79218965eb72c92a549dd5a330112', 'admin', '', null, 0, '2019-11-01 10:39:47', '2019-11-01 10:39:47');
+INSERT INTO cilicili.acl_user (id, username, password, nick_name, salt, token, is_deleted, gmt_create, gmt_modified) VALUES ('2', 'test', '96e79218965eb72c92a549dd5a330112', 'test', null, null, 0, '2019-11-01 16:36:07', '2019-11-01 16:40:08');

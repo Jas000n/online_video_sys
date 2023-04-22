@@ -27,7 +27,7 @@ export default{
   //添加创作者
   addProducer(producer){
     return request({
-      url:`/proservice/producer/addProducer`,
+      url:`/service/producer/addProducer`,
       method:"post",
       data:producer
     })
@@ -37,7 +37,7 @@ export default{
   //通过id获取创作者信息
   getProducerByID(id){
     return request({
-      url:`/proservice/producer/getProducer/${id}`,
+      url:`/service/producer/getProducer/${id}`,
       method:"get",
     })
   },
@@ -45,7 +45,7 @@ export default{
   //修改创作者
   updateProducer(producer){
     return request({
-      url:`/proservice/producer/updateProducer`,
+      url:`/service/producer/updateProducer`,
       method:"post",
       data:producer
     })
