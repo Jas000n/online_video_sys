@@ -100,6 +100,16 @@ create table classification
 create index idx_parent_id
     on classification (parent_id);
 
+create table collection
+(
+    id           char(19) not null
+        primary key,
+    u_id         char(19) not null,
+    v_id         char(19) not null,
+    gmt_create   datetime not null,
+    gmt_modified datetime not null
+);
+
 create table comment
 (
     id           char(19)                     not null comment 'ID'

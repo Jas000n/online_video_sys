@@ -53,13 +53,14 @@
 .bg-green{background-color:#14BA4C}
 .bg-fa{background-color:#fafafa}
 .c-btn-3{border-color:#FC0;color:#FC0}
-.d-t-icon-1,.d-t-icon-2,.d-t-icon-3,.d-t-icon-4,.dClose,.dpIcon,.g-a-title em,.h-r-s-box .s-btn em,.icon-close,.lh-p-icon,.lh-playing span em,.login-icon,.m-tree-icon,.news-icon,.no-data-ico,.noter-dy em,.noter-zan em,.o-c-icon,.p-h-goback em,.q-hd,.q-share-icon,.q-tw,.r-fixed-ul li a em,.scIcon,.shareIcon,.u-a-cw,.u-a-zq,.v-play-btn em,.h-l-nav li .hl-sec-nav dd a em,.icon80,.icon14,.icon20,.s-car-close,.c-pay-problem em,.pay-error-btn a em,.cou-arrow-down,.cou-arrow-up  {background:url(../img/icon.png) no-repeat}
+.d-t-icon-1,.d-t-icon-2,.d-t-icon-3,.d-t-icon-4,.dClose,.dpIcon,.g-a-title em,.sc_en, .h-r-s-box .s-btn em,.icon-close,.lh-p-icon,.lh-playing span em,.login-icon,.m-tree-icon,.news-icon,.no-data-ico,.noter-dy em,.noter-zan em,.o-c-icon,.p-h-goback em,.q-hd,.q-share-icon,.q-tw,.r-fixed-ul li a em,.scIcon,.shareIcon,.u-a-cw,.u-a-zq,.v-play-btn em,.h-l-nav li .hl-sec-nav dd a em,.icon80,.icon14,.icon20,.s-car-close,.c-pay-problem em,.pay-error-btn a em,.cou-arrow-down,.cou-arrow-up  {background:url(../img/icon.png) no-repeat}
 .h-r-s-box .s-btn em{background-position:0 0}
 .login-icon{background-position:0 -29px}
 .news-icon{background-position:0 -55px}
 .shareIcon{background-position:0 -89px}
 .scIcon{background-position:0 -113px}
 .sc-end .scIcon{background-position:0 -137px}
+.sc_en{background-position:0 -137px}
 .m-tree-icon{background-position:0 -195px}
 a.current-1 .m-tree-icon{background-position:0 -212px}
 .lh-p-icon{background-position:0 -234px}
