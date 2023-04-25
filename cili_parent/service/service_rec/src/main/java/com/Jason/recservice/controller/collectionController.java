@@ -51,4 +51,10 @@ public class collectionController {
         }
         return R.ok().data("state",result);
     }
+    @GetMapping("test")
+    public void sqlToCsv(){
+        //这里导出会有mysql安全问题
+        //collectionService.sqlToCsv();
+        collectionService.mysqlDataToCsv();
+    }
 }
