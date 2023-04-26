@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.Jason.recservice.client.pyRecClient;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 public class collectionController {
     @Autowired
     private collectionService collectionService;
+    @Autowired
+    private pyRecClient pyRecClient;
 
     //传入vid根据token解析uid,进行影视收藏
     @GetMapping("like/{v_id}")
@@ -51,10 +53,16 @@ public class collectionController {
         }
         return R.ok().data("state",result);
     }
-    @GetMapping("test")
+    @GetMapping("generateCSv")
     public void sqlToCsv(){
         //这里导出会有mysql安全问题
         //collectionService.sqlToCsv();
         collectionService.mysqlDataToCsv();
+    }
+    @GetMapping("test")
+    public String test(){
+        String test = pyRecClient.test();
+        System.out.println(test);
+        return test;
     }
 }
