@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(value = "service-py-rec")
 public interface pyRecClient {
 
-    //测试接口是否跑通
-    @GetMapping("/py")
-    public String test();
+    //获得推荐影视id列表
+    @GetMapping("/py_rec/{id}/{k}")
+    public String getKRec(@PathVariable String id, @PathVariable String k);
 }

@@ -19,8 +19,8 @@
             <router-link to="/producer" tag="li" active-class="current">
               <a>创作者</a>
             </router-link>
-            <router-link to="/article" tag="li" active-class="current">
-              <a>专栏</a>
+            <router-link to="/recommend" tag="li" active-class="current">
+              <a>猜你喜欢</a>
             </router-link>
 <!--            <router-link to="/qa" tag="li" active-class="current">-->
 <!--              <a>问答</a>-->

@@ -23,5 +23,13 @@ export default {
       method: 'get'
 
     })
+  },
+  //获取推荐列表
+  recKRecommendation(k) {
+    return request({
+      url: `/rec/rec/${k}`,
+      method: 'get'
+
+    })
   }
 }

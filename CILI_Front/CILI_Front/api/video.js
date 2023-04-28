@@ -32,6 +32,14 @@ export default {
       }
     })
   },
+  //根据推荐系统生成的影视id, 获取影视的详细信息
+  getRecVideoInfo(list){
+    return request({
+      url: `service/videoFront/getRecVideoList`,
+      method: 'post',
+      data:list
+    })
+  },
 
 
 }

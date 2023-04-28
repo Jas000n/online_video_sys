@@ -11,24 +11,27 @@ def cos_sim(x, y):
     return (numerator / denominator)
 
 
-def similarity(data):
-    '''计算矩阵中任意两行之间的相似度
+def similarity(data,userId):
+    '''计算用户user和其他用户的相似度
     input:  data(mat):任意矩阵
     output: w(mat):任意两行之间的相似度
     '''
+    user_list = list(data[:,0])
+    user_index = user_list.index(userId)
     data = data[1:][1:]
     m = np.shape(data)[0]  # 用户的数量
     # 初始化相似度矩阵
     w = np.mat(np.zeros((m, m)))
 
-    for i in range(m):
-        for j in range(i, m):
-            if j != i:
-                # 计算任意两行之间的相似度
-                w[i, j] = cos_sim(data[i,], data[j,])
-                w[j, i] = w[i, j]
-            else:
-                w[i, j] = 0
+    i = user_index
+    for j in range(i, m):
+        if j != i:
+            # 计算任意两行之间的相似度
+            w[i, j] = cos_sim(data[i,], data[j,])
+            w[j, i] = w[i, j]
+        else:
+            w[i, j] = 0
+
     return w
 
 
@@ -39,7 +42,7 @@ def user_based_recommend(data, w, user):
             user(int):用户的编号
     output: predict(list):推荐列表
     '''
-    user_list = data[0][:]
+    user_list = data[:,0]
     video_list = data[:][0]
     data = data[1:][1:]
 
@@ -87,10 +90,10 @@ if __name__ == '__main__':
     print("------------ 1. 加载数据 ------------")
     data = mv100.generateMatrix("./test.csv")
     print("------------ 2. 计算两个用户间的相似度-------------")
-    w = similarity(data)
+    w = similarity(data,777)
     # 3、利用用户之间的相似性进行推荐
     print("------------ 3. 预测用户与没有交互过得产品的喜爱程度 ------------")
-    predict = user_based_recommend(data, w, 1)
+    predict = user_based_recommend(data, w, 777)
     # 4、进行Top-K推荐
     print("------------ 4. 推荐k个产品 ------------")
     top_recom = top_k(predict, 2)

@@ -15,9 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @RestController
 //@CrossOrigin
@@ -58,7 +56,7 @@ public class videoFrontController {
         System.out.println(memberId);
         System.out.println("end of memebre id !!!!!!!!!!!!");
         if(Objects.equals(memberId, "")){
-            System.out.println("没有memberid,我草了");
+            System.out.println("没有memberid");
         }
         //查询video基本信息
         videoWebVO videoWebVO= videoService.getBaseInfo(videoId);
@@ -71,5 +69,16 @@ public class videoFrontController {
 
         return R.ok().data("videoWebVO",videoWebVO).data("seasons",seasons).data("isbuy",isBuy);
 
+    }
+    //根据推荐的影视id获取影视信息
+    @PostMapping("getRecVideoInfo")
+    public R getRecVideoInfo(@RequestBody String [] VIDs){
+        List<Video> result = new ArrayList<>();
+        for(String vid:VIDs){
+            System.out.println(Arrays.toString(VIDs));
+            Video byId = videoService.getById(vid);
+            result.add(byId);
+        }
+        return R.ok().data("item",result);
     }
 }

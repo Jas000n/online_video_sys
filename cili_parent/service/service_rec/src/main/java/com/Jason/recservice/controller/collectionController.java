@@ -2,10 +2,14 @@ package com.Jason.recservice.controller;
 
 import com.Jason.common.utils.JwtUtils;
 import com.Jason.common.utils.R;
+import com.Jason.recservice.client.VideoClient;
 import com.Jason.recservice.entity.Collection;
 import com.Jason.recservice.service.collectionService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +24,8 @@ public class collectionController {
     private collectionService collectionService;
     @Autowired
     private pyRecClient pyRecClient;
+    @Autowired
+    private VideoClient videoClient;
 
     //传入vid根据token解析uid,进行影视收藏
     @GetMapping("like/{v_id}")
@@ -53,16 +59,28 @@ public class collectionController {
         }
         return R.ok().data("state",result);
     }
+    @Scheduled(cron = "0 0 23 * * * ")
     @GetMapping("generateCSv")
     public void sqlToCsv(){
         //这里导出会有mysql安全问题
         //collectionService.sqlToCsv();
         collectionService.mysqlDataToCsv();
     }
-    @GetMapping("test")
-    public String test(){
-        String test = pyRecClient.test();
-        System.out.println(test);
-        return test;
+    @GetMapping("rec/{k}")
+    public R test(@PathVariable String k,HttpServletRequest httpServletRequest){
+//        this.sqlToCsv();
+        String u_id = JwtUtils.getMemberIdByJwtToken(httpServletRequest);
+        //调用python客户端
+        String json = pyRecClient.getKRec(u_id,k);
+        //解析json
+        JSONObject jsonObject = JSON.parseObject(json);
+        String recommendations = jsonObject.getString("recommendations");
+        System.out.println(recommendations);
+        //得到所有vid
+        String[] VIDs = recommendations.replace("]","").replace("[","").replace(" ","").split(",");
+        for (String id:VIDs){
+            System.out.println(id);
+        }
+        return videoClient.getRecVideoInfo(VIDs);
     }
 }
