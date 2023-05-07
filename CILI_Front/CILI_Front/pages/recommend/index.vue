@@ -1,5 +1,6 @@
 <template>
   <div>
+    <img src="@/assets/img/rc_loading.gif" id="loading_gif">
     <ul class="of" id="bna">
       <li v-for="item in items" :key="item.id">
         <div class="cc-l-wrap">
@@ -54,6 +55,8 @@ export default {
       .then(response =>{
         console.log(response)
         this.items = response.data.data.item
+        let gif_dom = document.getElementById("loading_gif")
+        gif_dom.hidden = true
       })
   },
 };

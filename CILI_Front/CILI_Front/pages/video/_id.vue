@@ -233,6 +233,7 @@
 import videoAPi from "@/api/video.js";
 import orderApi from "@/api/order.js";
 import recApi from "@/api/recommendation.js";
+import cookie from "js-cookie";
 export default {
   // asyncData({ params, error }) {
   //   return videoAPi.getVideoInfo(params.id).then(response => {
@@ -309,6 +310,14 @@ export default {
     },
   },
   mounted() {
+    //如果没有登录,跳转到登录
+    if(!cookie.get('cili_token')){
+      this.$router.push("/login")
+      this.$message({
+        type: 'warning',
+        message: "请先登录"
+      })
+    }
     this.initVideo();
   },
 };
