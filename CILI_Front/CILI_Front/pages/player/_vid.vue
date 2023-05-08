@@ -1,11 +1,7 @@
 <template>
   <div>
-    <div>
-      <NPlayer
-        ref="player"
-        :options="{ src: 'https://v-cdn.zjol.com.cn/280443.mp4' }"
-        :set="setPlayer"
-      />
+    <div id="toMount">
+
     </div>
 
 
@@ -153,8 +149,16 @@ export default {
 
   },
   mounted() {
-    this.vid = this.$route.params.vid
-    this.initPlayer()
+    if(process.client){
+      this.$nextTick(() => {
+        // 在客户端中运行的代码
+        // 初始化播放器实例
+        this.vid = this.$route.params.vid
+        this.initPlayer()
+      })
+
+    }
+
 
 
 
