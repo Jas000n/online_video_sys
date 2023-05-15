@@ -3,6 +3,7 @@ package com.Jason.cmsservice.controller;
 import com.Jason.cmsservice.entity.CrmBanner;
 import com.Jason.cmsservice.service.CrmBannerService;
 import com.Jason.common.utils.R;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -60,6 +61,19 @@ public class BannerAdminController {
             return R.error();
         }
 
+    }
+    //获取全部bannner
+    @GetMapping("getAll")
+    public R getAll(){
+        QueryWrapper<CrmBanner> queryWrapper = new QueryWrapper<>();
+        List<CrmBanner> list = crmBannerService.list(queryWrapper);
+        return R.ok().data("banners",list);
+    }
+    //根据id删除banner
+    @DeleteMapping("removeById/{id}")
+    public R removeById(@PathVariable String id){
+        crmBannerService.removeById(id);
+        return R.ok();
     }
 }
 
