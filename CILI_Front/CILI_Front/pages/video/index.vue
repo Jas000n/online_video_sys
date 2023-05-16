@@ -92,7 +92,7 @@
                     <span class="fl jgAttr c-ccc f-fA">
                       <i class="c-999 f-fA">{{ item.viewCount }}人观看</i>
                       |
-                      <i class="c-999 f-fA">9634评论</i>
+                      <i class="c-999 f-fA">0评论</i>
                     </span>
                   </section>
                 </div>
@@ -107,6 +107,7 @@
         <div>
           <div class="paging">
             <!-- undisable这个class是否存在，取决于数据属性hasPrevious -->
+            <div>当前第{{data.current}}页,共{{data.pages}}页</div>
             <a
               :class="{undisable: !data.hasPrevious}"
               href="#"
@@ -117,13 +118,13 @@
               href="#"
               title="前一页"
               @click.prevent="gotoPage(data.current-1)">&lt;</a>
-            <a
-              v-for="page in data.pages"
-              :key="page"
-              :class="{current: data.current == page, undisable: data.current == page}"
-              :title="'第'+page+'页'"
-              href="#"
-              @click.prevent="gotoPage(page)">{{ page }}</a>
+<!--            <a-->
+<!--              v-for="page in data.pages"-->
+<!--              :key="page"-->
+<!--              :class="{current: data.current == page, undisable: data.current == page}"-->
+<!--              :title="'第'+page+'页'"-->
+<!--              href="#"-->
+<!--              @click.prevent="gotoPage(page)">{{ page }}</a>-->
             <a
               v-if="data.hasNext"
               href="#"
