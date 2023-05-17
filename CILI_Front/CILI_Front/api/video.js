@@ -40,6 +40,13 @@ export default {
       data:list
     })
   },
+  //模糊搜索影视
+  searchVideo(name){
+    return request({
+      url: `service/videoFront/search/${name}`,
+      method: 'get',
+    })
+  },
 
 
 }

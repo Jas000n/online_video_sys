@@ -10,6 +10,7 @@ import com.Jason.proservice.entity.vo.frontVO.videoWebVO;
 import com.Jason.proservice.service.SeasonService;
 import com.Jason.proservice.service.VideoService;
 import com.alibaba.excel.event.Order;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -80,5 +81,15 @@ public class videoFrontController {
             result.add(byId);
         }
         return R.ok().data("item",result);
+    }
+
+    //根据传入的字段模糊搜索影视
+    @GetMapping("search/{name}")
+    public R search(@PathVariable String name){
+        QueryWrapper<Video> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("title",name).last(" limit 8");
+        List<Video> list = videoService.list(queryWrapper);
+        int total = list.size();
+        return R.ok().data("list",list).data("total",total);
     }
 }

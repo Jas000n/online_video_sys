@@ -22,9 +22,6 @@
             <router-link to="/recommend" tag="li" active-class="current">
               <a>猜你喜欢</a>
             </router-link>
-<!--            <router-link to="/qa" tag="li" active-class="current">-->
-<!--              <a>问答</a>-->
-<!--            </router-link>-->
           </ul>
           <!-- / nav -->
           <ul class="h-r-login">
@@ -59,15 +56,13 @@
             </li>
             <!-- /未登录显示第1 li；登录后显示第2，3 li -->
           </ul>
-          <aside class="h-r-search">
-            <form action="#" method="post">
+          <aside class="h-r-search" v-if="$route.path==='/video'">
               <label class="h-r-s-box">
-                <input type="text" placeholder="影视搜索" name="queryVideo.videoName" value>
-                <button type="submit" class="s-btn">
+                <input  type="text" v-model="queryName" >
+                <button class="s-btn" @click="searchVideo">
                   <em class="icon18">&nbsp;</em>
                 </button>
               </label>
-            </form>
           </aside>
         </div>
         <aside class="mw-nav-btn">
@@ -146,6 +141,7 @@ import "~/assets/css/pages-weixinpay.css"
 export default {
   data(){
     return{
+      queryName:"影视搜索",
       token:"",
       loginInfo:{
         id:"",
@@ -201,6 +197,13 @@ export default {
           this.loginInfo = response.data.data.userInfo
           cookie.set("cili_ucenter",JSON.stringify(this.loginInfo),{domain:'localhost'})
         })
+    },
+    searchVideo(){
+      // console.log(this.queryName);
+      this.$router.push({
+        path:"video",
+        query:{searchName:this.queryName}
+      })
     }
 
   }

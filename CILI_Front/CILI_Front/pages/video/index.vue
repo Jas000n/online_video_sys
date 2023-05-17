@@ -162,10 +162,28 @@ export default {
     }
   },
   created() {
-    this.initVideoFirst();
-    this.initClassification()
+    this.init()
+
+  },
+  watch:{//监听，这里监听路由变化，每次路由发生变化就会执行
+    $route(to,from){
+      this.init()
+    }
   },
   methods:{
+    //页面初始化方法
+    init(){
+      console.log("执行init")
+      //此时是搜索影视
+      if(this.$route.query!=null && this.$route.query.searchName){
+        console.log("you query!!!")
+        this.searchVideo()
+      }else{
+        //此时是正常初始化页面
+        this.initVideoFirst();
+        this.initClassification();
+      }
+    },
     //查询第一页数据
     initVideoFirst(){
       videoApi.getVideoFrontList(1,8,this.searchObj)
@@ -263,8 +281,22 @@ export default {
 
       //刷新数据
       this.gotoPage(1)
+    },
+    //模糊搜索影视
+    searchVideo(){
+      console.log(this.$route.query.searchName)
+      videoApi.searchVideo(this.$route.query.searchName)
+        .then(response =>{
+          this.data.items = response.data.data.list;
+          this.data.current = 1;
+          this.data.pages = 1;
+          this.data.total = response.data.data.total;
+          this.data.hasPrevious = false;
+          this.data.hasNext = false;
+          this.data.size = 8;
+          console.log(this.data)
+        })
     }
-
   }
 }
 </script>
