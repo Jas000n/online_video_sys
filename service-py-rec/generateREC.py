@@ -14,6 +14,7 @@ def cos_sim(x, y):
 def similarity(data,userId):
     '''计算用户user和其他用户的相似度
     input:  data(mat):任意矩阵
+            userId(int):用户id
     output: w(mat):任意两行之间的相似度
     '''
     user_list = list(data[:,0])
