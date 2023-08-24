@@ -1,34 +1,83 @@
-# online_video_sys
-# 1 项目介绍
-基于Spring Cloud和Vue的电影观看及推荐系统的设计与实现。这个系统旨在为用户提供一个方便、多样化的影视作品观看平台，并根据用户的偏好进行智能推荐，以提升用户的观影体验。
+# ONLINE VIDEO SYSTEM
 
-在用户需求分析方面，用户可以通过网站或应用程序浏览各种类型的影视作品，包括电影、电视剧、综艺和动画等。他们可以查看作品的基本信息、剧情简介、创作者等详细信息，并浏览其他用户的评论和收藏。用户还可以对影视作品进行评论和收藏，与其他用户交流和分享观影经验。另外，用户可以购买自己喜欢的付费影视，并从系统根据个人偏好推荐的影视中获得更多观影选择。
+<img src="./pic/tech_stack.png" style="zoom:33%;" />
 
-管理员需求分析方面，管理员需要对影视作品的分类、标签、创作者、封面、简介等进行管理。他们需要查看系统的数据统计信息，如用户数量、影视上传数量、浏览量等，以便更好地了解系统的运行情况并进行优化。网站管理员还可以创建新的管理员用户，分配角色和权限，确保系统的安全性和稳定性。
-# 2 技术选型
-为了满足技术需求，我选择了一些常用的技术和工具。首先，我使用阿里云的视频点播服务（VOD）来存储和读取影视视频。通过这个服务，我可以支持多种视频格式和编码，提供快速的上传和加速服务，满足不同的在线视频应用需求。此外，我使用MyBatisPlus作为持久层框架，利用其提供的功能和工具，如自动生成代码、通用CRUD操作、分页查询、性能分析等，来提高开发效率和代码质量。
+## 0. INTRODUCTION
 
-为了实现影视分类管理，我使用了EasyExcel这个Java工具，它可以方便地实现Excel文件的导入导出功能。我将影视分类以多级列表的形式展示，并使用阿里云对象存储（OSS）来存储用户头像、影视封面等数据，使用Spring Boot的OSS SDK实现服务的调用。
+Design and implementation of a movie viewing and recommendation system based on Spring Cloud and Vue. This system aims to provide users with a convenient and diverse viewing platform for film and TV shows, and make intelligent recommendations based on user preferences to enhance users' viewing experience. It also provides a background management page to provide administrators with convenient and easy-to-use background management.
 
-在前端开发方面，我选择了基于Vue.js的组件库element UI来开发网站的前台和网站管理员的后台界面。element UI提供了一系列美观、易用、高效的UI组件，可以满足不同界面的需求。另外，为了方便用户编辑影视简介，我集成了TinyMCE富文本编辑器，让用户可以通过可视化的方式编辑富文本内容。
+<img src="./pic/pro.png" alt="pro" style="zoom:33%;" />
 
-为了测试后端接口的功能和性能，我使用了postman来进行接口测试。postman可以发送HTTP请求，测试后端接口的功能和性能，并对接口进行调试和监控。通过设置请求头、请求体和请求参数等信息，可以对接口进行全面的测试。
+<img src="./pic/pro3.png" alt="pro3" style="zoom:33%;" />
 
-针对推荐系统的需求，我选择了MovieLens 100k数据集作为基础数据，并在处理后将其导入到我的观影系统中，并为943位用户注册了账号，1600部电影写入了数据库。共约10万条数据。我采用协同过滤算法来为用户进行影视推荐，并使用Flask作为服务器后端，并注册到Nacos，以供其他微服务远程调用。
+## 1. TECHLOGOLIES USED
 
-为了保障系统的安全性，我使用了Spring Security作为安全框架，为后台管理人员分配角色和权限。采用经典的用户、角色、权限以及其之间关系的五张表的形式，完成了系统的安全部分。
+In order to meet the technical requirements, I have chosen some common technologies and tools. 
 
-为了实现注册手机号验证，我利用阿里云短信服务发送短信验证码，并将其存入Redis中，以便验证用户的手机号码。
 
-为了实现支付功能，我采用微信支付开发者接口，用户可以通过微信支付购买喜欢的影视作品。注册成为微信开发者较为复杂，但我使用了供学习使用的ID和Key来模拟支付功能。
 
-为了提升用户体验和网站性能，我使用了Nuxt作为基于Vue.js的服务端渲染框架，将Vue.js应用程序打包成可以在服务器上运行的静态HTML文件。这样可以加快页面加载速度，并且有利于搜索引擎优化。
+First, I use AliCloud's Video-on-Demand (VOD) service to store and read videos. With this service, the site can support multiple video formats and encodings, and provide fast uploading and acceleration services to meet the different needs of online video applications. 
 
-在视频播放方面，我选择了阿里云影视播放器作为基于HTML5技术开发的播放器，它支持多种格式的视频文件播放，具有清晰流畅、快速加载和可自定义皮肤等特点，适用于各种在线视频应用场景。
+<img src="./pic/vod.png" alt="vod" style="zoom:33%;" />
 
-为了提高网站前台首页的性能和减少对MySQL的查询，我使用了Redis作为缓存数据库，用于存储首页数据和短信验证码等信息。
 
-为了实现微信登录功能，我采用了微信开放平台提供的OAuth2.0协议，用户可以使用微信账号快速登录系统，免去繁琐的注册流程，同时提高账号的安全性和可信度。这在各种移动端和Web应用中被广泛应用。
 
-最后，为了方便系统的部署和管理，我选择了Ubuntu作为操作系统，并使用IDEA和WebStorm作为开发工具，提高开发效率和代码质量。MySQL作为关系型数据库管理系统，用于存储系统的相关数据。
+In addition, I use MyBatisPlus as the persistence layer framework to improve development efficiency and code quality by utilizing the features and tools it provides, such as automatic code generation, generic CRUD operations, paging queries, performance analysis, etc. 
 
+
+
+In order to achieve video classification management, I used the Java tool EasyExcel, which can easily realize the import and export functions of Excel files. 
+
+<img src="./pic/classification.png" alt="classification" style="zoom:33%;" />
+
+
+
+I use Alibaba Cloud Object Storage (OSS) to store data such as user avatars, video covers, etc., and use Spring Boot's OSS SDK to implement service calls.
+
+<img src="./pic/oss.png" alt="oss" style="zoom:33%;" />
+
+In order to test the functionality and performance of the backend interface, I used postman for interface testing. Postman can send HTTP requests, test the function and performance of the backend interface, and debug and monitor the interface. By setting information such as request header, request body, and request parameters, the interface can be fully tested.
+
+
+
+In terms of front-end development, I chose the Vue.js-based component library element UI to develop the front-end of the website and the back-end interface of the webmaster. element UI provides a series of beautiful, easy-to-use, and efficient UI components to meet the needs of different interfaces. 
+
+
+
+In addition, in order to facilitate users to edit video introduction, I integrated the TinyMCE rich text editor, allowing users to edit rich text content in a visual way.
+
+
+
+For the requirements of the recommendation system, I chose the MovieLens 100k dataset as the basic data, and imported it into my viewing system after processing, and registered accounts for 943 users, and 1600 movies were written into the database. A total of about 100,000 pieces of data. I use a collaborative filtering algorithm to recommend videos for users, and use Flask as the server backend, and register with Nacos for remote calls by other microservices.
+
+
+
+In order to ensure the security of the system, I use Spring Security as a security framework to assign roles and permissions to background managers. The security part of the system is completed in the form of five classic tables of users, roles, permissions and their relationships.
+
+
+
+In order to verify the registered mobile phone number, I use the Alibaba Cloud SMS service to send a SMS verification code and store it in Redis to verify the user's mobile phone number.
+
+
+
+In order to realize the payment function, I use the WeChat payment developer interface, and users can purchase favorite film and television works through WeChat payment. Registering as a WeChat developer is more complicated, but I used the ID and Key for learning to simulate the payment function.
+
+
+
+In order to improve user experience and website performance, I use Nuxt as a Vue.js-based server-side rendering framework to package Vue.js applications into static HTML files that can run on the server. This results in faster page loads and is good for search engine optimization.
+
+
+
+In terms of video play, I chose Alibaba Cloud Video Player as a player developed based on HTML5 technology. It supports video file playback in multiple formats, and has the characteristics of clear and smooth, fast loading and customizable skins. It is suitable for various Online video application scenarios.
+
+
+
+In order to improve the performance of the front page of the website and reduce queries to MySQL, I used Redis as a cache database to store information such as home page data and SMS verification codes.
+
+
+
+In order to realize the WeChat login function, I adopted the OAuth2.0 protocol provided by the WeChat open platform. Users can use the WeChat account to quickly log in to the system, eliminating the cumbersome registration process and improving the security and credibility of the account. This is widely used in various mobile and web applications.
+
+Finally, in order to facilitate system deployment and management, I chose Ubuntu as the operating system, and used IDEA and WebStorm as development tools to improve development efficiency and code quality. As a relational database management system, MySQL is used to store related data of the system.
+
+All in all, my final project is the design and implementation of a movie viewing and recommendation system based on Spring Cloud and Vue. By integrating multiple technologies and tools, including Alibaba Cloud VOD, MyBatisPlus, EasyExcel, Alibaba Cloud OSS, element UI, rich text editor, postman, recommendation system, Spring Security, Alibaba Cloud SMS, WeChat payment, Nuxt, Alibaba Cloud video playback Server, Redis, WeChat login, Nacos, Ubuntu, IDEA and WebStorm, etc., I built a movie viewing and recommendation system with complete functions, excellent performance, safety and reliability. All the codes of this project, including SQL scripts, various configuration files, etc., are open source at https://github.com/Jas000n/online_video_sys. Among more than 100 commits, each commit has a very detailed commit message, recorded The content of each submitted work. Guaranteed authenticity and originality of the project. 
