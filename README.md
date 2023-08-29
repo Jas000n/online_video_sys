@@ -1,16 +1,26 @@
 # ONLINE VIDEO SYSTEM
 
-<img src="./pic/tech_stack.png" style="zoom:33%;" />
+<img src="./pic/tech_stack.png" style="zoom:20%;" />
 
 ## 0. INTRODUCTION
+<img src="./pic/demo.gif" alt="pro"  />
 
-Design and implementation of a movie viewing and recommendation system based on Spring Cloud and Vue. This system aims to provide users with a convenient and diverse viewing platform for film and TV shows, and make intelligent recommendations based on user preferences to enhance users' viewing experience. It also provides a background management page to provide administrators with convenient and easy-to-use background management.
+Design and implementation of a movie viewing and recommendation system based on Spring Cloud and Vue. This system aims to: 
+* provide users with a convenient and diverse viewing platform for film and TV shows, 
+* make intelligent recommendations based on user preferences to enhance users' viewing experience,
+* provide a background management site to administrators with convenient and easy-to-use background management tool
 
+**Innovative aspects**:
+* 943 Uses & 1682 Movies in the system, with 100k interaction records, enabled by MovieLens dataset
+* Nuxt server side rendering, improved search engine optimization (SEO) and faster initial page load times
+* Features to improve user experience: Line Chart for Statistics, Redis for index page data cache, WeChat Login......
+* ......
 <img src="./pic/pro.png" alt="pro" style="zoom:33%;" />
 
 <img src="./pic/pro3.png" alt="pro3" style="zoom:33%;" />
 
 ## 1. TECHLOGOLIES USED
+<img src="./pic/modules.png" alt="pro" style="zoom:33%;" />
 
 In order to meet the technical requirements, I have chosen some common technologies and tools. 
 
