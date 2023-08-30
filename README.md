@@ -2,6 +2,8 @@
 
 <img src="./pic/tech_stack.png" style="zoom:20%;" />
 
+[Instruction on how to deploy the project(blog on my github.io)](https://jas000n.github.io/jekyll/2023-08-30-Deploy-Online-Video-System.html)
+
 ## 0. INTRODUCTION
 <img src="./pic/demo.gif" alt="pro"  />
 
